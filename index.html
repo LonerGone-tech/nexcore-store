@@ -2328,7 +2328,14 @@
       <div class="contact-form-title">◈ Send Us a Message</div>
       
       <!-- IMPORTANT: This form uses Netlify Forms to send you emails -->
-      <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form 
+        id="contactForm" 
+        name="contact" 
+        method="POST" 
+        data-netlify="true" 
+        netlify-honeypot="bot-field"
+        action="/thanks.html"
+      >
         <input type="hidden" name="form-name" value="contact">
         <p style="display:none;">
           <label>Don't fill this out: <input name="bot-field"></label>
