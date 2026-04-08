@@ -61,7 +61,7 @@
     border-color: var(--accent3);
   }
 
-  /* PARALLAX CONTAINER */
+  /* PARALLAX BACKGROUND */
   .parallax-wrap {
     position: fixed;
     inset: 0;
@@ -69,8 +69,6 @@
     z-index: 0;
     overflow: hidden;
   }
-
-  /* GRID BACKGROUND */
   .grid-bg {
     position: absolute;
     inset: -50%;
@@ -80,16 +78,12 @@
       linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
     background-size: 80px 80px;
-    transform-origin: center;
     will-change: transform;
   }
-
-  /* FLOATING ORBS */
   .orb {
     position: absolute;
     border-radius: 50%;
     will-change: transform;
-    filter: blur(1px);
   }
   .orb-1 {
     width: 500px;
@@ -112,13 +106,6 @@
     right: 20%;
     background: radial-gradient(circle, rgba(255,45,106,0.12) 0%, transparent 60%);
   }
-
-  /* HEXAGON DECORATIONS */
-  .hex-grid {
-    position: absolute;
-    inset: 0;
-    opacity: 0.4;
-  }
   .hex {
     position: absolute;
     width: 60px;
@@ -130,31 +117,23 @@
     font-size: 60px;
     color: var(--accent);
     opacity: 0.15;
-    filter: drop-shadow(0 0 10px var(--accent));
   }
   .hex-1 { top: 15%; left: 10%; }
   .hex-2 { top: 25%; right: 15%; }
   .hex-3 { bottom: 30%; left: 20%; }
   .hex-4 { bottom: 20%; right: 25%; }
   .hex-5 { top: 60%; left: 5%; }
-
-  /* CIRCUIT LINES */
   .circuit-line {
     position: absolute;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     height: 1px;
-    will-change: transform, opacity;
+    will-change: transform;
   }
   .circuit-1 { top: 20%; left: 0; width: 30%; }
   .circuit-2 { top: 40%; right: 0; width: 25%; }
   .circuit-3 { bottom: 30%; left: 0; width: 35%; }
   .circuit-4 { top: 70%; right: 0; width: 20%; }
-
-  /* FLOATING PARTICLES */
-  .particles {
-    position: absolute;
-    inset: 0;
-  }
+  .particles { position: absolute; inset: 0; }
   .particle {
     position: absolute;
     width: 3px;
@@ -165,8 +144,6 @@
     will-change: transform;
     box-shadow: 0 0 6px var(--accent);
   }
-
-  /* SCAN LINE EFFECT */
   .scanline {
     position: fixed;
     top: 0;
@@ -211,7 +188,6 @@
     letter-spacing: 0.2em;
     color: var(--accent);
     text-transform: uppercase;
-    position: relative;
     text-shadow: var(--neon-glow);
     cursor: pointer;
   }
@@ -261,17 +237,11 @@
     transition: width 0.3s;
     box-shadow: var(--neon-glow);
   }
-  nav ul a:hover {
+  nav ul a:hover, nav ul a.active {
     color: var(--accent);
     text-shadow: var(--neon-glow);
   }
-  nav ul a:hover::after {
-    width: 100%;
-  }
-  nav ul a.active {
-    color: var(--accent);
-  }
-  nav ul a.active::after {
+  nav ul a:hover::after, nav ul a.active::after {
     width: 100%;
   }
   .nav-right {
@@ -340,13 +310,9 @@
     transform: translateX(0);
   }
 
-  /* PAGES CONTAINER */
-  .page {
-    display: none;
-  }
-  .page.active {
-    display: block;
-  }
+  /* PAGE SYSTEM */
+  .page { display: none; }
+  .page.active { display: block; }
 
   /* HERO */
   .hero {
@@ -387,7 +353,6 @@
     background: var(--accent);
     clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
     animation: pulse 1.5s ease-in-out infinite;
-    box-shadow: var(--neon-glow);
   }
   @keyframes fadeSlideUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -405,37 +370,19 @@
     animation-delay: 0.4s;
     opacity: 0;
   }
-  h1 .line {
-    display: block;
-    overflow: hidden;
-  }
   h1 .gradient {
     background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    position: relative;
   }
   h1 .outline {
     color: transparent;
     -webkit-text-stroke: 1px var(--accent);
-    position: relative;
-  }
-  h1 .outline::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 0.5;
   }
   .hero-sub {
     font-size: 18px;
     color: var(--muted);
-    font-weight: 400;
     max-width: 550px;
     line-height: 1.9;
     margin-bottom: 3rem;
@@ -467,25 +414,11 @@
     border: none;
     cursor: pointer;
     transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
   }
-  .btn-primary::before {
-    content: '→';
-    position: absolute;
-    right: 20px;
-    opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s;
-  }
   .btn-primary:hover {
-    padding-right: 55px;
     box-shadow: 0 0 40px rgba(0,240,255,0.4);
-  }
-  .btn-primary:hover::before {
-    opacity: 1;
-    transform: translateX(0);
+    transform: translateY(-2px);
   }
   .btn-ghost {
     font-family: 'Orbitron', sans-serif;
@@ -504,10 +437,9 @@
   .btn-ghost:hover {
     color: var(--accent2);
     border-color: var(--accent2);
-    box-shadow: 0 0 25px rgba(168,85,247,0.2);
   }
 
-  /* ROBOT DECORATION */
+  /* ROBOT EYE */
   .robot-eye {
     position: absolute;
     right: 10%;
@@ -527,20 +459,12 @@
     align-items: center;
     justify-content: center;
     animation: eyeGlow 3s ease-in-out infinite;
-    position: relative;
   }
   .eye-outer::before {
     content: '';
     position: absolute;
     inset: 10px;
     border: 1px solid rgba(0,240,255,0.3);
-    border-radius: 50%;
-  }
-  .eye-outer::after {
-    content: '';
-    position: absolute;
-    inset: -15px;
-    border: 1px solid rgba(0,240,255,0.15);
     border-radius: 50%;
   }
   @keyframes eyeGlow {
@@ -552,7 +476,6 @@
     height: 100px;
     background: radial-gradient(circle, var(--accent) 0%, var(--accent2) 50%, transparent 70%);
     border-radius: 50%;
-    position: relative;
     will-change: transform;
     transition: transform 0.1s ease-out;
   }
@@ -595,28 +518,12 @@
     text-align: center;
     border-right: 1px solid var(--border);
     transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
   }
   .stat:last-child { border-right: none; }
-  .stat::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: width 0.3s;
-    box-shadow: var(--neon-glow);
-  }
-  .stat:hover::before { width: 60%; }
   .stat:hover { background: rgba(0,240,255,0.02); }
   .stat-icon {
     font-size: 28px;
     margin-bottom: 12px;
-    filter: drop-shadow(0 0 10px currentColor);
   }
   .stat-num {
     font-family: 'Orbitron', sans-serif;
@@ -665,7 +572,6 @@
     width: 30px;
     height: 1px;
     background: var(--accent);
-    box-shadow: var(--neon-glow);
   }
   h2 {
     font-family: 'Orbitron', sans-serif;
@@ -705,7 +611,6 @@
     background: var(--accent);
     color: var(--bg);
     border-color: var(--accent);
-    box-shadow: var(--neon-glow);
   }
 
   /* PRODUCT GRID */
@@ -720,7 +625,7 @@
     background: var(--card);
     cursor: pointer;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s;
     overflow: hidden;
   }
   .product-card::before {
@@ -741,7 +646,7 @@
     background: #0c1520;
     transform: translateY(-5px);
     z-index: 2;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(0,240,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
   .product-card:hover .product-img-wrap img {
     transform: scale(1.08);
@@ -766,11 +671,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.5s;
   }
   .product-img-wrap .emoji-placeholder {
     font-size: 80px;
-    filter: grayscale(20%);
   }
   .product-img-wrap::after {
     content: '';
@@ -815,12 +719,11 @@
     transform: translate(10px, -10px);
     transition: all 0.3s;
     z-index: 2;
-    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
     background: rgba(3,6,10,0.8);
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
   }
   .product-info {
     padding: 1.75rem;
-    position: relative;
   }
   .product-cat {
     font-family: 'Space Mono', monospace;
@@ -864,9 +767,7 @@
     letter-spacing: 2px;
   }
 
-  /* ==================== */
   /* WHY US PAGE */
-  /* ==================== */
   .why-us-hero {
     padding: 160px 3rem 80px;
     text-align: center;
@@ -884,8 +785,6 @@
     font-size: 18px;
     line-height: 1.8;
   }
-
-  /* TRUST BADGES */
   .trust-badges {
     display: flex;
     justify-content: center;
@@ -906,7 +805,6 @@
   }
   .trust-badge:hover {
     border-color: var(--accent);
-    box-shadow: var(--neon-glow);
     transform: translateY(-5px);
   }
   .trust-badge-icon {
@@ -927,8 +825,6 @@
     color: var(--muted);
     line-height: 1.6;
   }
-
-  /* REASONS SECTION */
   .reasons-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -945,23 +841,9 @@
     transition: all 0.3s;
     clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
   }
-  .reason-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
   .reason-card:hover {
     border-color: var(--accent);
     transform: translateY(-5px);
-  }
-  .reason-card:hover::before {
-    opacity: 1;
   }
   .reason-number {
     font-family: 'Orbitron', sans-serif;
@@ -991,7 +873,7 @@
     line-height: 1.8;
   }
 
-  /* REVIEWS SECTION */
+  /* REVIEWS */
   .reviews-section {
     padding: 6rem 3rem;
     position: relative;
@@ -1003,13 +885,6 @@
   .reviews-header {
     text-align: center;
     margin-bottom: 4rem;
-  }
-  .reviews-header h2 {
-    margin-bottom: 1rem;
-  }
-  .reviews-header p {
-    color: var(--muted);
-    font-size: 16px;
   }
   .reviews-stats {
     display: flex;
@@ -1046,7 +921,6 @@
     background: var(--card);
     border: 1px solid var(--border);
     padding: 2rem;
-    position: relative;
     transition: all 0.3s;
     clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
   }
@@ -1085,9 +959,6 @@
     font-size: 18px;
     color: var(--bg);
   }
-  .review-author-info {
-    flex: 1;
-  }
   .review-author-name {
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
@@ -1105,15 +976,10 @@
     font-family: 'Space Mono', monospace;
     font-size: 9px;
     color: var(--success);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .review-verified::before {
-    content: '✓';
+    margin-left: auto;
   }
 
-  /* GUARANTEE SECTION */
+  /* GUARANTEE */
   .guarantee-section {
     padding: 6rem 3rem;
     text-align: center;
@@ -1126,7 +992,6 @@
     padding: 4rem;
     background: var(--card);
     border: 2px solid var(--accent);
-    position: relative;
     clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
     box-shadow: var(--neon-glow);
   }
@@ -1173,9 +1038,7 @@
     color: var(--accent);
   }
 
-  /* ==================== */
   /* CONTACT PAGE */
-  /* ==================== */
   .contact-hero {
     padding: 160px 3rem 60px;
     text-align: center;
@@ -1192,7 +1055,6 @@
     color: var(--muted);
     font-size: 18px;
   }
-
   .contact-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1203,8 +1065,6 @@
     position: relative;
     z-index: 2;
   }
-
-  /* CONTACT FORM */
   .contact-form-wrap {
     background: var(--card);
     border: 1px solid var(--border);
@@ -1291,8 +1151,10 @@
     box-shadow: 0 0 40px rgba(0,240,255,0.4);
     transform: translateY(-2px);
   }
-
-  /* CONTACT INFO */
+  .form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
   .contact-info-wrap {
     display: flex;
     flex-direction: column;
@@ -1334,7 +1196,7 @@
     color: var(--accent);
   }
 
-  /* FAQ SECTION */
+  /* FAQ */
   .faq-section {
     padding: 6rem 3rem;
     position: relative;
@@ -1427,7 +1289,7 @@
     z-index: 201;
     display: flex;
     flex-direction: column;
-    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: right 0.4s;
   }
   .cart-sidebar.open {
     right: 0;
@@ -1510,7 +1372,6 @@
     font-size: 13px;
     font-weight: 600;
     margin-bottom: 6px;
-    letter-spacing: 0.03em;
   }
   .cart-item-price {
     font-family: 'Space Mono', monospace;
@@ -1535,7 +1396,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Orbitron', sans-serif;
   }
   .qty-btn:hover {
     border-color: var(--accent);
@@ -1555,7 +1415,6 @@
     padding: 5px 10px;
     transition: all 0.2s;
     font-family: 'Space Mono', monospace;
-    letter-spacing: 0.05em;
   }
   .remove-item:hover {
     text-shadow: 0 0 10px var(--accent3);
@@ -1616,9 +1475,7 @@
   }
 
   /* DETAIL PAGE */
-  #detail {
-    display: none;
-  }
+  #detail { display: none; }
   .detail-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1634,25 +1491,13 @@
     justify-content: center;
     font-size: 180px;
     overflow: hidden;
-    position: relative;
   }
   .detail-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  .detail-img::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--accent);
-    opacity: 0.2;
-    margin: 15px;
-    pointer-events: none;
-  }
-  .detail-meta {
-    padding-top: 1rem;
-  }
+  .detail-meta { padding-top: 1rem; }
   .detail-cat {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
@@ -1660,12 +1505,6 @@
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .detail-cat::before {
-    content: '◈';
   }
   .detail-name {
     font-family: 'Orbitron', sans-serif;
@@ -1705,9 +1544,7 @@
     padding: 16px 18px;
     transition: background 0.3s;
   }
-  .spec:hover {
-    background: #0c1520;
-  }
+  .spec:hover { background: #0c1520; }
   .spec-key {
     font-family: 'Space Mono', monospace;
     font-size: 9px;
@@ -1755,11 +1592,8 @@
     transition: color 0.3s;
     background: none;
     border: none;
-    padding: 10px 0;
   }
-  .back-btn:hover {
-    color: var(--accent);
-  }
+  .back-btn:hover { color: var(--accent); }
 
   /* FEATURES */
   .feature-strip {
@@ -1778,16 +1612,9 @@
     gap: 1.25rem;
     transition: all 0.3s;
   }
-  .feature:last-child {
-    border-right: none;
-  }
-  .feature:hover {
-    background: rgba(0,240,255,0.02);
-  }
-  .feature-icon {
-    font-size: 30px;
-    filter: drop-shadow(0 0 15px currentColor);
-  }
+  .feature:last-child { border-right: none; }
+  .feature:hover { background: rgba(0,240,255,0.02); }
+  .feature-icon { font-size: 30px; }
   .feature-title {
     font-family: 'Orbitron', sans-serif;
     font-size: 13px;
@@ -1841,9 +1668,7 @@
     letter-spacing: 0.1em;
     transition: color 0.3s;
   }
-  .footer-links a:hover {
-    color: var(--accent);
-  }
+  .footer-links a:hover { color: var(--accent); }
 
   /* TOAST */
   .toast {
@@ -1860,27 +1685,22 @@
     letter-spacing: 0.1em;
     z-index: 300;
     opacity: 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    box-shadow: 0 10px 40px rgba(0,255,136,0.3);
   }
   .toast.show {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
   }
 
-  /* FORM SUCCESS MESSAGE */
+  /* FORM SUCCESS */
   .form-success {
-    display: none;
     text-align: center;
     padding: 3rem;
   }
-  .form-success.show {
-    display: block;
-  }
   .form-success-icon {
     font-size: 64px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .form-success-title {
     font-family: 'Orbitron', sans-serif;
@@ -1888,10 +1708,12 @@
     font-weight: 700;
     color: var(--success);
     margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(0,255,136,0.5);
   }
   .form-success-text {
     color: var(--muted);
     font-size: 15px;
+    margin-bottom: 2rem;
   }
 
   /* RESPONSIVE */
@@ -1905,7 +1727,6 @@
     nav ul { display: none; }
     .hero { padding: 120px 1.5rem 80px; }
     .stats-bar, .feature-strip { margin: 0 1.5rem; grid-template-columns: 1fr 1fr; }
-    .stat, .feature { border-bottom: 1px solid var(--border); }
     .section { padding: 5rem 1.5rem; }
     .detail-wrap { grid-template-columns: 1fr; gap: 2rem; }
     .feature-strip { grid-template-columns: 1fr; }
@@ -1916,7 +1737,6 @@
     .trust-badges { padding: 3rem 1.5rem; gap: 1.5rem; }
     .trust-badge { min-width: 100%; }
     .reviews-grid { grid-template-columns: 1fr; }
-    .reviews-stats { gap: 2rem; }
     .guarantee-box { padding: 2.5rem 1.5rem; }
     .contact-container { padding: 3rem 1.5rem 6rem; }
     .faq-section { padding: 4rem 1.5rem; }
@@ -1925,7 +1745,7 @@
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
+<!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-dot" id="cursorDot"></div>
 
@@ -1935,45 +1755,38 @@
   <div class="orb orb-1" id="orb1"></div>
   <div class="orb orb-2" id="orb2"></div>
   <div class="orb orb-3" id="orb3"></div>
-  <div class="hex-grid">
-    <div class="hex hex-1" id="hex1"></div>
-    <div class="hex hex-2" id="hex2"></div>
-    <div class="hex hex-3" id="hex3"></div>
-    <div class="hex hex-4" id="hex4"></div>
-    <div class="hex hex-5" id="hex5"></div>
-  </div>
+  <div class="hex hex-1" id="hex1"></div>
+  <div class="hex hex-2" id="hex2"></div>
+  <div class="hex hex-3" id="hex3"></div>
+  <div class="hex hex-4" id="hex4"></div>
+  <div class="hex hex-5" id="hex5"></div>
   <div class="circuit-line circuit-1" id="circuit1"></div>
   <div class="circuit-line circuit-2" id="circuit2"></div>
   <div class="circuit-line circuit-3" id="circuit3"></div>
   <div class="circuit-line circuit-4" id="circuit4"></div>
   <div class="particles" id="particles"></div>
 </div>
-
-<!-- SCANLINE -->
 <div class="scanline"></div>
 
 <!-- NAV -->
 <nav id="nav">
-  <div style="position: relative;">
+  <div style="position:relative">
     <div class="logo" onclick="showPage('home')">NEXCORE</div>
     <div class="logo-sub">SYSTEMS V2.5</div>
   </div>
   <ul>
     <li><a href="#" onclick="showPage('home')" class="nav-link active" data-page="home">Home</a></li>
-    <li><a href="#" onclick="showPage('home'); setTimeout(() => document.getElementById('featured').scrollIntoView({behavior:'smooth'}), 100)" class="nav-link">Shop</a></li>
+    <li><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('featured').scrollIntoView({behavior:'smooth'}),100)">Shop</a></li>
     <li><a href="#" onclick="showPage('why-us')" class="nav-link" data-page="why-us">Why Us</a></li>
     <li><a href="#" onclick="showPage('contact')" class="nav-link" data-page="contact">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <div class="cart-btn" onclick="toggleCart()">
-      🛒
-      <span class="cart-count" id="cartCount">0</span>
-    </div>
-    <a href="#" onclick="showPage('home'); setTimeout(() => document.getElementById('featured').scrollIntoView({behavior:'smooth'}), 100)" class="nav-cta">Shop Now</a>
+    <div class="cart-btn" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('featured').scrollIntoView({behavior:'smooth'}),100)" class="nav-cta">Shop Now</a>
   </div>
 </nav>
 
-<!-- CART SIDEBAR -->
+<!-- CART -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
   <div class="cart-header">
@@ -1986,7 +1799,7 @@
       <p>Cargo bay is empty</p>
     </div>
   </div>
-  <div class="cart-footer" id="cartFooter" style="display: none;">
+  <div class="cart-footer" id="cartFooter" style="display:none">
     <div class="cart-total">
       <span class="cart-total-label">Total</span>
       <span class="cart-total-price" id="cartTotal">$0.00</span>
@@ -1998,27 +1811,21 @@
 <!-- TOAST -->
 <div class="toast" id="toast">◈ Added to cargo bay</div>
 
-<!-- ==================== -->
 <!-- HOME PAGE -->
-<!-- ==================== -->
 <div id="page-home" class="page active">
   <section class="hero">
-    <!-- ROBOT EYE -->
     <div class="robot-eye" id="robotEye">
       <div class="eye-ring"></div>
-      <div class="eye-outer">
-        <div class="eye-inner" id="eyeInner"></div>
-      </div>
+      <div class="eye-outer"><div class="eye-inner" id="eyeInner"></div></div>
     </div>
-
     <div class="hero-content">
       <div class="hero-tag">◈ SYSTEM ONLINE — 2025 COLLECTION</div>
       <h1>
-        <span class="line"><span class="gradient">Pro Gear</span></span>
-        <span class="line"><span class="outline" data-text="Zero">Zero</span></span>
-        <span class="line"><span class="gradient">Compromise</span></span>
+        <span class="gradient">Pro Gear</span><br>
+        <span class="outline">Zero</span><br>
+        <span class="gradient">Compromise</span>
       </h1>
-      <p class="hero-sub">Next-generation peripherals engineered for <strong>creators</strong>, <strong>developers</strong>, and <strong>elite competitors</strong>. Precision meets performance.</p>
+      <p class="hero-sub">Next-generation peripherals engineered for <strong>creators</strong>, <strong>developers</strong>, and <strong>elite competitors</strong>.</p>
       <div class="hero-actions">
         <button class="btn-primary" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">Explore Systems</button>
         <button class="btn-ghost" onclick="showPage('why-us')">Why Choose Us</button>
@@ -2027,263 +1834,80 @@
   </section>
 
   <div class="stats-bar">
-    <div class="stat">
-      <div class="stat-icon">⚡</div>
-      <div class="stat-num">2,400+</div>
-      <div class="stat-label">Systems Online</div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">🚀</div>
-      <div class="stat-num">48hr</div>
-      <div class="stat-label">Rapid Deploy</div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">◈</div>
-      <div class="stat-num">4.9★</div>
-      <div class="stat-label">Trust Score</div>
-    </div>
-    <div class="stat">
-      <div class="stat-icon">↺</div>
-      <div class="stat-num">30-Day</div>
-      <div class="stat-label">Return Protocol</div>
-    </div>
+    <div class="stat"><div class="stat-icon">⚡</div><div class="stat-num">2,400+</div><div class="stat-label">Products</div></div>
+    <div class="stat"><div class="stat-icon">🚀</div><div class="stat-num">48hr</div><div class="stat-label">Shipping</div></div>
+    <div class="stat"><div class="stat-icon">◈</div><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
+    <div class="stat"><div class="stat-icon">↺</div><div class="stat-num">30-Day</div><div class="stat-label">Returns</div></div>
   </div>
 
   <section class="section" id="featured">
     <div class="section-header">
-      <div>
-        <div class="section-label">Featured Systems</div>
-        <h2>Select Your Gear</h2>
-      </div>
+      <div><div class="section-label">Featured Systems</div><h2>Select Your Gear</h2></div>
     </div>
-    
     <div class="category-filter">
-      <button class="filter-btn active" onclick="filterProducts('all')">All Systems</button>
+      <button class="filter-btn active" onclick="filterProducts('all')">All</button>
       <button class="filter-btn" onclick="filterProducts('keyboard')">Keyboards</button>
       <button class="filter-btn" onclick="filterProducts('mouse')">Mice</button>
       <button class="filter-btn" onclick="filterProducts('monitor')">Monitors</button>
       <button class="filter-btn" onclick="filterProducts('microphone')">Audio</button>
       <button class="filter-btn" onclick="filterProducts('mousepad')">Surfaces</button>
     </div>
-    
     <div class="product-grid" id="product-grid"></div>
   </section>
 
   <div class="feature-strip">
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <div>
-        <div class="feature-title">Rapid Deploy</div>
-        <div class="feature-text">Systems shipped within 24-48 hours globally.</div>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <div>
-        <div class="feature-title">Secure Matrix</div>
-        <div class="feature-text">Military-grade encryption protocols.</div>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">↺</div>
-      <div>
-        <div class="feature-title">Return Protocol</div>
-        <div class="feature-text">30-day hassle-free returns.</div>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">◈</div>
-      <div>
-        <div class="feature-title">Support Core</div>
-        <div class="feature-text">24/7 technical assistance.</div>
-      </div>
-    </div>
+    <div class="feature"><div class="feature-icon">⚡</div><div><div class="feature-title">Fast Shipping</div><div class="feature-text">24-48 hour dispatch worldwide.</div></div></div>
+    <div class="feature"><div class="feature-icon">🔒</div><div><div class="feature-title">Secure</div><div class="feature-text">Military-grade encryption.</div></div></div>
+    <div class="feature"><div class="feature-icon">↺</div><div><div class="feature-title">Returns</div><div class="feature-text">30-day hassle-free returns.</div></div></div>
+    <div class="feature"><div class="feature-icon">◈</div><div><div class="feature-title">Support</div><div class="feature-text">24/7 technical assistance.</div></div></div>
   </div>
 
   <footer>
     <div class="footer-logo" onclick="showPage('home')">◈ NEXCORE</div>
-    <div class="footer-text">© 2025 Nexcore Systems. All rights reserved.</div>
+    <div class="footer-text">© 2025 Nexcore Systems</div>
     <div class="footer-links">
       <a href="#" onclick="showPage('why-us')">Why Us</a>
       <a href="#" onclick="showPage('contact')">Contact</a>
       <a href="#">Privacy</a>
-      <a href="#">Terms</a>
     </div>
   </footer>
 </div>
 
-<!-- ==================== -->
 <!-- WHY US PAGE -->
-<!-- ==================== -->
 <div id="page-why-us" class="page">
   <div class="why-us-hero">
-    <div class="section-label" style="justify-content: center;">Why Choose NEXCORE</div>
+    <div class="section-label" style="justify-content:center">Why Choose NEXCORE</div>
     <h1><span class="gradient">Built Different</span></h1>
-    <p>We're not just another tech store. We're a team of gamers, creators, and tech enthusiasts who obsess over quality so you don't have to.</p>
+    <p>We're not just another tech store. We're gamers, creators, and tech enthusiasts who obsess over quality.</p>
   </div>
 
   <div class="trust-badges">
-    <div class="trust-badge">
-      <div class="trust-badge-icon">🛡️</div>
-      <div class="trust-badge-title">100% Secure</div>
-      <div class="trust-badge-text">Bank-level encryption on every transaction</div>
-    </div>
-    <div class="trust-badge">
-      <div class="trust-badge-icon">🚀</div>
-      <div class="trust-badge-title">Fast Shipping</div>
-      <div class="trust-badge-text">24-48 hour dispatch worldwide</div>
-    </div>
-    <div class="trust-badge">
-      <div class="trust-badge-icon">↺</div>
-      <div class="trust-badge-title">30-Day Returns</div>
-      <div class="trust-badge-text">No questions asked refund policy</div>
-    </div>
-    <div class="trust-badge">
-      <div class="trust-badge-icon">🎧</div>
-      <div class="trust-badge-title">24/7 Support</div>
-      <div class="trust-badge-text">Real humans, real help, any time</div>
-    </div>
+    <div class="trust-badge"><div class="trust-badge-icon">🛡️</div><div class="trust-badge-title">100% Secure</div><div class="trust-badge-text">Bank-level encryption</div></div>
+    <div class="trust-badge"><div class="trust-badge-icon">🚀</div><div class="trust-badge-title">Fast Shipping</div><div class="trust-badge-text">24-48 hour dispatch</div></div>
+    <div class="trust-badge"><div class="trust-badge-icon">↺</div><div class="trust-badge-title">30-Day Returns</div><div class="trust-badge-text">No questions asked</div></div>
+    <div class="trust-badge"><div class="trust-badge-icon">🎧</div><div class="trust-badge-title">24/7 Support</div><div class="trust-badge-text">Real humans, real help</div></div>
   </div>
 
   <div class="reasons-grid">
-    <div class="reason-card">
-      <div class="reason-number">01</div>
-      <div class="reason-icon">🎯</div>
-      <div class="reason-title">Curated Selection</div>
-      <div class="reason-text">We don't sell everything — only the best. Every product goes through our rigorous testing process. If it doesn't meet our standards, it doesn't make the cut. Period.</div>
-    </div>
-    <div class="reason-card">
-      <div class="reason-number">02</div>
-      <div class="reason-icon">💰</div>
-      <div class="reason-title">Unbeatable Prices</div>
-      <div class="reason-text">Direct partnerships with manufacturers mean we cut out the middlemen. You get premium gear at prices that make sense. No inflated markups, no games.</div>
-    </div>
-    <div class="reason-card">
-      <div class="reason-number">03</div>
-      <div class="reason-icon">📦</div>
-      <div class="reason-title">Lightning-Fast Shipping</div>
-      <div class="reason-text">Orders placed before 2 PM ship same day. We partner with premium carriers to ensure your gear arrives fast and safe. Track every step of the journey.</div>
-    </div>
-    <div class="reason-card">
-      <div class="reason-number">04</div>
-      <div class="reason-icon">🔧</div>
-      <div class="reason-title">Expert Support</div>
-      <div class="reason-text">Got questions? Our support team actually knows the products. No scripts, no bots — just real tech enthusiasts who speak your language.</div>
-    </div>
-    <div class="reason-card">
-      <div class="reason-number">05</div>
-      <div class="reason-icon">🏆</div>
-      <div class="reason-title">Quality Guarantee</div>
-      <div class="reason-text">Every product comes with our ironclad quality guarantee. If something's not right, we'll make it right. Your satisfaction is non-negotiable.</div>
-    </div>
-    <div class="reason-card">
-      <div class="reason-number">06</div>
-      <div class="reason-icon">🌟</div>
-      <div class="reason-title">Community Trusted</div>
-      <div class="reason-text">Join thousands of satisfied customers who've made the switch. Check our reviews — real people, real experiences, real results.</div>
-    </div>
+    <div class="reason-card"><div class="reason-number">01</div><div class="reason-icon">🎯</div><div class="reason-title">Curated Selection</div><div class="reason-text">We don't sell everything — only the best. Every product goes through our rigorous testing.</div></div>
+    <div class="reason-card"><div class="reason-number">02</div><div class="reason-icon">💰</div><div class="reason-title">Unbeatable Prices</div><div class="reason-text">Direct partnerships with manufacturers mean we cut out the middlemen.</div></div>
+    <div class="reason-card"><div class="reason-number">03</div><div class="reason-icon">📦</div><div class="reason-title">Lightning Shipping</div><div class="reason-text">Orders placed before 2 PM ship same day with premium carriers.</div></div>
+    <div class="reason-card"><div class="reason-number">04</div><div class="reason-icon">🔧</div><div class="reason-title">Expert Support</div><div class="reason-text">Our support team actually knows the products. No scripts, no bots.</div></div>
+    <div class="reason-card"><div class="reason-number">05</div><div class="reason-icon">🏆</div><div class="reason-title">Quality Guarantee</div><div class="reason-text">Every product comes with our ironclad quality guarantee.</div></div>
+    <div class="reason-card"><div class="reason-number">06</div><div class="reason-icon">🌟</div><div class="reason-title">Community Trusted</div><div class="reason-text">Join thousands of satisfied customers who've made the switch.</div></div>
   </div>
 
   <div class="reviews-section">
-    <div class="reviews-header">
-      <div class="section-label" style="justify-content: center;">Customer Reviews</div>
-      <h2>What Our Community Says</h2>
-      <p>Don't just take our word for it — here's what real customers have to say.</p>
-    </div>
-
+    <div class="reviews-header"><div class="section-label" style="justify-content:center">Customer Reviews</div><h2>What Our Community Says</h2></div>
     <div class="reviews-stats">
-      <div class="review-stat">
-        <div class="review-stat-num">4.9</div>
-        <div class="review-stat-label">Average Rating</div>
-      </div>
-      <div class="review-stat">
-        <div class="review-stat-num">2,847</div>
-        <div class="review-stat-label">Happy Customers</div>
-      </div>
-      <div class="review-stat">
-        <div class="review-stat-num">98%</div>
-        <div class="review-stat-label">Would Recommend</div>
-      </div>
+      <div class="review-stat"><div class="review-stat-num">4.9</div><div class="review-stat-label">Average Rating</div></div>
+      <div class="review-stat"><div class="review-stat-num">2,847</div><div class="review-stat-label">Happy Customers</div></div>
+      <div class="review-stat"><div class="review-stat-num">98%</div><div class="review-stat-label">Would Recommend</div></div>
     </div>
-
     <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Absolutely blown away by the quality. The keyboard I ordered exceeded my expectations in every way. Fast shipping, beautiful packaging, and the product itself is flawless. NEXCORE is now my go-to for all tech gear."</div>
-        <div class="review-author">
-          <div class="review-avatar">JM</div>
-          <div class="review-author-info">
-            <div class="review-author-name">Jake Morrison</div>
-            <div class="review-author-title">Pro Gamer</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Customer service is incredible. Had a small issue with my order and they resolved it within hours. Not days — HOURS. This is how every company should operate. Will definitely be ordering again."</div>
-        <div class="review-author">
-          <div class="review-avatar">SK</div>
-          <div class="review-author-info">
-            <div class="review-author-name">Sarah Kim</div>
-            <div class="review-author-title">Content Creator</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"The prices here are unreal. I was skeptical at first, but the quality is legit premium. Got my monitor in 3 days and it's been perfect for streaming. Zero dead pixels, amazing colors. 10/10."</div>
-        <div class="review-author">
-          <div class="review-avatar">MT</div>
-          <div class="review-author-info">
-            <div class="review-author-name">Marcus Thompson</div>
-            <div class="review-author-title">Twitch Streamer</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Third purchase from NEXCORE and they just keep delivering. The attention to detail in packaging alone shows they care. My new mic sounds absolutely professional. Worth every penny."</div>
-        <div class="review-author">
-          <div class="review-avatar">RL</div>
-          <div class="review-author-info">
-            <div class="review-author-name">Rachel Liu</div>
-            <div class="review-author-title">Podcaster</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"As a developer, I need reliable equipment. NEXCORE delivered. The mechanical keyboard I got has transformed my workflow. Cherry MX switches feel incredible, and the build quality is tank-solid."</div>
-        <div class="review-author">
-          <div class="review-avatar">DA</div>
-          <div class="review-author-info">
-            <div class="review-author-name">David Anderson</div>
-            <div class="review-author-title">Software Engineer</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Shipping to Europe was surprisingly fast and customs was handled smoothly. The product arrived in perfect condition. NEXCORE has earned a customer for life. Can't recommend enough!"</div>
-        <div class="review-author">
-          <div class="review-avatar">EP</div>
-          <div class="review-author-info">
-            <div class="review-author-name">Elena Petrov</div>
-            <div class="review-author-title">Graphic Designer</div>
-          </div>
-          <div class="review-verified">Verified Purchase</div>
-        </div>
-      </div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Absolutely blown away by the quality. The keyboard exceeded my expectations in every way. Fast shipping, beautiful packaging."</div><div class="review-author"><div class="review-avatar">JM</div><div><div class="review-author-name">Jake Morrison</div><div class="review-author-title">Pro Gamer</div></div><div class="review-verified">✓ Verified</div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Customer service is incredible. Had a small issue with my order and they resolved it within hours. Not days — HOURS."</div><div class="review-author"><div class="review-avatar">SK</div><div><div class="review-author-name">Sarah Kim</div><div class="review-author-title">Content Creator</div></div><div class="review-verified">✓ Verified</div></div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"The prices here are unreal. I was skeptical at first, but the quality is legit premium. Got my monitor in 3 days."</div><div class="review-author"><div class="review-avatar">MT</div><div><div class="review-author-name">Marcus Thompson</div><div class="review-author-title">Twitch Streamer</div></div><div class="review-verified">✓ Verified</div></div></div>
     </div>
   </div>
 
@@ -2291,7 +1915,7 @@
     <div class="guarantee-box">
       <div class="guarantee-icon">🛡️</div>
       <div class="guarantee-title">The NEXCORE Promise</div>
-      <div class="guarantee-text">We stand behind every product we sell with our ironclad satisfaction guarantee. If you're not 100% satisfied with your purchase, we'll make it right — no questions asked. That's not just marketing speak; it's our commitment to you.</div>
+      <div class="guarantee-text">We stand behind every product with our ironclad satisfaction guarantee. If you're not 100% satisfied, we'll make it right — no questions asked.</div>
       <div class="guarantee-features">
         <div class="guarantee-feature">30-Day Returns</div>
         <div class="guarantee-feature">Free Shipping</div>
@@ -2303,236 +1927,135 @@
 
   <footer>
     <div class="footer-logo" onclick="showPage('home')">◈ NEXCORE</div>
-    <div class="footer-text">© 2025 Nexcore Systems. All rights reserved.</div>
-    <div class="footer-links">
-      <a href="#" onclick="showPage('home')">Home</a>
-      <a href="#" onclick="showPage('contact')">Contact</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
+    <div class="footer-text">© 2025 Nexcore Systems</div>
+    <div class="footer-links"><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('contact')">Contact</a><a href="#">Privacy</a></div>
   </footer>
 </div>
 
-<!-- ==================== -->
 <!-- CONTACT PAGE -->
-<!-- ==================== -->
 <div id="page-contact" class="page">
   <div class="contact-hero">
-    <div class="section-label" style="justify-content: center;">Get In Touch</div>
+    <div class="section-label" style="justify-content:center">Get In Touch</div>
     <h1><span class="gradient">Contact Support</span></h1>
     <p>Have a question or need help? Our team is ready to assist you 24/7.</p>
   </div>
 
   <div class="contact-container">
-<div class="contact-form-wrap">
-  <div class="contact-form-title">◈ Send Us a Message</div>
-  
-  <form 
-    id="contactForm" 
-    name="contact" 
-    method="POST" 
-    data-netlify="true"
-    onsubmit="return handleSubmit(event)"
-  >
-    <input type="hidden" name="form-name" value="contact">
-    
-    <div id="formFields">
-      <div class="form-group">
-        <label class="form-label">Your Name *</label>
-        <input type="text" name="name" class="form-input" placeholder="John Doe" required>
-      </div>
+    <div class="contact-form-wrap">
+      <div class="contact-form-title">◈ Send Us a Message</div>
+      
+      <form id="contactForm" name="contact" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact">
+        
+        <div id="formFields">
+          <div class="form-group">
+            <label class="form-label">Your Name *</label>
+            <input type="text" name="name" class="form-input" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject *</label>
+            <select name="subject" class="form-select" required>
+              <option value="">Select a topic...</option>
+              <option value="order-status">Order Status</option>
+              <option value="shipping">Shipping Question</option>
+              <option value="returns">Returns & Refunds</option>
+              <option value="product-question">Product Question</option>
+              <option value="technical-support">Technical Support</option>
+              <option value="billing">Billing Issue</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Order Number (Optional)</label>
+            <input type="text" name="order-number" class="form-input" placeholder="NEX-XXXXXX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your Message *</label>
+            <textarea name="message" class="form-textarea" placeholder="Describe your question or issue..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">◈ Send Message</button>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label">Email Address *</label>
-        <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Subject *</label>
-        <select name="subject" class="form-select" required>
-          <option value="">Select a topic...</option>
-          <option value="order-status">Order Status</option>
-          <option value="shipping">Shipping Question</option>
-          <option value="returns">Returns & Refunds</option>
-          <option value="product-question">Product Question</option>
-          <option value="technical-support">Technical Support</option>
-          <option value="billing">Billing Issue</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Order Number (Optional)</label>
-        <input type="text" name="order-number" class="form-input" placeholder="NEX-XXXXXX">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Your Message *</label>
-        <textarea name="message" class="form-textarea" placeholder="Describe your question or issue in detail..." required></textarea>
-      </div>
-
-      <button type="submit" class="form-submit" id="submitBtn">◈ Send Message</button>
+        <div id="formSuccess" class="form-success" style="display:none">
+          <div class="form-success-icon">✓</div>
+          <div class="form-success-title">Message Sent!</div>
+          <div class="form-success-text">We've received your message and will respond within 24 hours.</div>
+          <button type="button" class="btn-ghost" onclick="resetForm()">Send Another Message</button>
+        </div>
+      </form>
     </div>
 
-    <div class="form-success" id="formSuccess" style="display:none;">
-      <div class="form-success-icon">✓</div>
-      <div class="form-success-title">Message Sent!</div>
-      <div class="form-success-text">We've received your message and will respond within 24 hours. Check your email for updates.</div>
-      <button type="button" class="btn-ghost" style="margin-top:2rem;" onclick="resetForm()">Send Another Message</button>
+    <div class="contact-info-wrap">
+      <div class="contact-info-card"><div class="contact-info-icon">📧</div><div class="contact-info-title">Email Us</div><div class="contact-info-text">support@nexcore.com</div></div>
+      <div class="contact-info-card"><div class="contact-info-icon">⚡</div><div class="contact-info-title">Response Time</div><div class="contact-info-text">We typically respond within 2-4 hours during business hours.</div></div>
+      <div class="contact-info-card"><div class="contact-info-icon">🌍</div><div class="contact-info-title">Business Hours</div><div class="contact-info-text">Mon-Fri: 9AM-8PM EST<br>Sat-Sun: 10AM-6PM EST</div></div>
+      <div class="contact-info-card"><div class="contact-info-icon">📦</div><div class="contact-info-title">Order Issues?</div><div class="contact-info-text">Include your order number for fastest resolution.</div></div>
     </div>
-  </form>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-header"><div class="section-label" style="justify-content:center">FAQ</div><h2>Frequently Asked Questions</h2></div>
+    <div class="faq-grid">
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">How long does shipping take?</div><div class="faq-answer"><div class="faq-answer-inner">We ship within 24-48 hours. Domestic: 3-5 days. International: 7-14 days.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What's your return policy?</div><div class="faq-answer"><div class="faq-answer-inner">30-day hassle-free returns. Items must be in original condition.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Do you ship internationally?</div><div class="faq-answer"><div class="faq-answer-inner">Yes! We ship to over 50 countries worldwide.</div></div></div>
+      <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Are your products authentic?</div><div class="faq-answer"><div class="faq-answer-inner">Absolutely. All products come with full manufacturer warranty.</div></div></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="showPage('home')">◈ NEXCORE</div>
+    <div class="footer-text">© 2025 Nexcore Systems</div>
+    <div class="footer-links"><a href="#" onclick="showPage('home')">Home</a><a href="#" onclick="showPage('why-us')">Why Us</a><a href="#">Privacy</a></div>
+  </footer>
+</div>
+
+<!-- DETAIL PAGE -->
+<div id="detail">
+  <section class="section">
+    <button class="back-btn" onclick="showHome()">← Return to Shop</button>
+    <div class="detail-wrap" id="detail-content"></div>
+  </section>
 </div>
 
 <script>
-// =============================================
-// PRODUCTS DATABASE
-// =============================================
+// PRODUCTS
 const products = [
-  {
-    id: 1,
-    name: "APEX TKL PRO",
-    category: "keyboard",
-    image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=500",
-    price: 129.99,
-    badge: "new",
-    stars: "★★★★★",
-    desc: "Precision-engineered tenkeyless mechanical keyboard with hot-swappable switches, per-key RGB matrix, and aerospace-grade aluminum construction.",
-    specs: [
-      { key: "Switch Type", val: "Cherry MX Red" },
-      { key: "Layout", val: "TKL 87-Key" },
-      { key: "Lighting", val: "Per-Key RGB" },
-      { key: "Interface", val: "USB-C / Wireless" },
-    ]
-  },
-  {
-    id: 2,
-    name: "VIPER X ULTRA",
-    category: "mouse",
-    image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500",
-    price: 79.99,
-    originalPrice: 99.99,
-    badge: "sale",
-    stars: "★★★★★",
-    desc: "Ultralight precision mouse at 58g with 25,600 DPI optical sensor. Zero latency wireless for competitive performance.",
-    specs: [
-      { key: "Weight", val: "58 grams" },
-      { key: "DPI Range", val: "100-25,600" },
-      { key: "Sensor", val: "PMW3395" },
-      { key: "Battery", val: "80hr Wireless" },
-    ]
-  },
-  {
-    id: 3,
-    name: "SOUNDFORGE SM7",
-    category: "microphone",
-    image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=500",
-    price: 219.99,
-    badge: null,
-    stars: "★★★★★",
-    desc: "Broadcast-grade dynamic microphone with integrated preamp and noise isolation. Studio quality for streaming and production.",
-    specs: [
-      { key: "Type", val: "Dynamic XLR" },
-      { key: "Pattern", val: "Cardioid" },
-      { key: "Frequency", val: "50Hz–20kHz" },
-      { key: "Interface", val: "XLR / USB-C" },
-    ]
-  },
-  {
-    id: 4,
-    name: "LUMEX 27 QHD",
-    category: "monitor",
-    image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500",
-    price: 399.99,
-    badge: "new",
-    stars: "★★★★☆",
-    desc: "27-inch QHD IPS display with 165Hz refresh and 1ms response. Factory calibrated for accurate color reproduction.",
-    specs: [
-      { key: "Resolution", val: "2560×1440" },
-      { key: "Refresh", val: "165Hz" },
-      { key: "Panel", val: "IPS, 1ms GTG" },
-      { key: "Ports", val: "HDMI 2.1, DP 1.4" },
-    ]
-  },
-  {
-    id: 5,
-    name: "PHANTOM 65%",
-    category: "keyboard",
-    image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500",
-    price: 109.99,
-    badge: null,
-    stars: "★★★★★",
-    desc: "Compact 65% layout with gasket-mounted construction for premium acoustics. Wireless connectivity with 4000mAh battery.",
-    specs: [
-      { key: "Switch Type", val: "Gateron Yellow" },
-      { key: "Layout", val: "65% 68-Key" },
-      { key: "Mount", val: "Gasket" },
-      { key: "Battery", val: "4000mAh" },
-    ]
-  },
-  {
-    id: 6,
-    name: "NEXPAD XL",
-    category: "mousepad",
-    image: "https://images.unsplash.com/photo-1629429407756-446d66f5b24f?w=500",
-    price: 39.99,
-    originalPrice: 49.99,
-    badge: "sale",
-    stars: "★★★★☆",
-    desc: "Extended control surface with micro-woven cloth and reinforced edges. Anti-slip base for stability.",
-    specs: [
-      { key: "Dimensions", val: "900×400mm" },
-      { key: "Thickness", val: "4mm" },
-      { key: "Surface", val: "Control Cloth" },
-      { key: "Base", val: "Anti-Slip Rubber" },
-    ]
-  }
+  { id: 1, name: "APEX TKL PRO", category: "keyboard", image: "https://images.unsplash.com/photo-1595225476474-87563907a212?w=500", price: 129.99, badge: "new", stars: "★★★★★", desc: "Precision tenkeyless mechanical keyboard with hot-swappable switches and per-key RGB.", specs: [{ key: "Switch", val: "Cherry MX Red" }, { key: "Layout", val: "TKL 87-Key" }, { key: "Lighting", val: "Per-Key RGB" }, { key: "Connection", val: "USB-C" }] },
+  { id: 2, name: "VIPER X ULTRA", category: "mouse", image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=500", price: 79.99, originalPrice: 99.99, badge: "sale", stars: "★★★★★", desc: "Ultralight 58g mouse with 25,600 DPI optical sensor.", specs: [{ key: "Weight", val: "58g" }, { key: "DPI", val: "25,600" }, { key: "Sensor", val: "PMW3395" }, { key: "Battery", val: "80hr" }] },
+  { id: 3, name: "SOUNDFORGE SM7", category: "microphone", image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=500", price: 219.99, badge: null, stars: "★★★★★", desc: "Broadcast-grade dynamic microphone with integrated preamp.", specs: [{ key: "Type", val: "Dynamic" }, { key: "Pattern", val: "Cardioid" }, { key: "Frequency", val: "50Hz-20kHz" }, { key: "Connection", val: "XLR/USB-C" }] },
+  { id: 4, name: "LUMEX 27 QHD", category: "monitor", image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500", price: 399.99, badge: "new", stars: "★★★★☆", desc: "27-inch QHD IPS display with 165Hz and 1ms response.", specs: [{ key: "Resolution", val: "2560×1440" }, { key: "Refresh", val: "165Hz" }, { key: "Panel", val: "IPS 1ms" }, { key: "Ports", val: "HDMI, DP" }] },
+  { id: 5, name: "PHANTOM 65%", category: "keyboard", image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=500", price: 109.99, badge: null, stars: "★★★★★", desc: "Compact 65% layout with gasket mount and wireless.", specs: [{ key: "Switch", val: "Gateron Yellow" }, { key: "Layout", val: "65% 68-Key" }, { key: "Mount", val: "Gasket" }, { key: "Battery", val: "4000mAh" }] },
+  { id: 6, name: "NEXPAD XL", category: "mousepad", image: "https://images.unsplash.com/photo-1629429407756-446d66f5b24f?w=500", price: 39.99, originalPrice: 49.99, badge: "sale", stars: "★★★★☆", desc: "Extended control surface with micro-woven cloth.", specs: [{ key: "Size", val: "900×400mm" }, { key: "Thickness", val: "4mm" }, { key: "Surface", val: "Control" }, { key: "Base", val: "Anti-Slip" }] }
 ];
 
-// =============================================
 // PAGE NAVIGATION
-// =============================================
 function showPage(pageName) {
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.remove('active');
-  });
-  
-  // Hide detail page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('detail').style.display = 'none';
-  
-  // Show selected page
-  const targetPage = document.getElementById('page-' + pageName);
-  if (targetPage) {
-    targetPage.classList.add('active');
-  }
-  
-  // Update nav links
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.remove('active');
-    if (link.dataset.page === pageName) {
-      link.classList.add('active');
-    }
+  const page = document.getElementById('page-' + pageName);
+  if (page) page.classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => {
+    l.classList.remove('active');
+    if (l.dataset.page === pageName) l.classList.add('active');
   });
-  
-  // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// =============================================
-// CUSTOM CURSOR
-// =============================================
+// CURSOR
 const cursor = document.getElementById('cursor');
 const cursorDot = document.getElementById('cursorDot');
-let mouseX = 0, mouseY = 0;
-let cursorX = 0, cursorY = 0;
-
-document.addEventListener('mousemove', (e) => {
+let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+document.addEventListener('mousemove', e => {
   mouseX = e.clientX;
   mouseY = e.clientY;
   cursorDot.style.left = mouseX + 'px';
   cursorDot.style.top = mouseY + 'px';
 });
-
 function animateCursor() {
   cursorX += (mouseX - cursorX) * 0.15;
   cursorY += (mouseY - cursorY) * 0.15;
@@ -2542,239 +2065,121 @@ function animateCursor() {
 }
 animateCursor();
 
-// Hover effect on interactive elements
-function addCursorHover() {
-  document.querySelectorAll('a, button, .product-card, .filter-btn, .cart-btn, .faq-question, .trust-badge, .reason-card, .review-card').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-  });
-}
-addCursorHover();
-
-// =============================================
-// PARALLAX EFFECTS
-// =============================================
+// PARALLAX
 const gridBg = document.getElementById('gridBg');
 const orb1 = document.getElementById('orb1');
 const orb2 = document.getElementById('orb2');
 const orb3 = document.getElementById('orb3');
-const hexes = [
-  document.getElementById('hex1'),
-  document.getElementById('hex2'),
-  document.getElementById('hex3'),
-  document.getElementById('hex4'),
-  document.getElementById('hex5')
-];
-const circuits = [
-  document.getElementById('circuit1'),
-  document.getElementById('circuit2'),
-  document.getElementById('circuit3'),
-  document.getElementById('circuit4')
-];
 const eyeInner = document.getElementById('eyeInner');
-const robotEye = document.getElementById('robotEye');
-
-let targetX = 0, targetY = 0;
-let currentX = 0, currentY = 0;
-let scrollY = 0;
-
-document.addEventListener('mousemove', (e) => {
+let targetX = 0, targetY = 0, currentX = 0, currentY = 0, scrollY = 0;
+document.addEventListener('mousemove', e => {
   targetX = (e.clientX - window.innerWidth / 2) / window.innerWidth;
   targetY = (e.clientY - window.innerHeight / 2) / window.innerHeight;
 });
-
 window.addEventListener('scroll', () => {
   scrollY = window.pageYOffset;
-  
-  const nav = document.getElementById('nav');
-  if (scrollY > 50) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
-  }
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 50);
 });
-
 function animateParallax() {
   currentX += (targetX - currentX) * 0.05;
   currentY += (targetY - currentY) * 0.05;
-  
-  if (gridBg) {
-    gridBg.style.transform = `translate(${-currentX * 30}px, ${-currentY * 30 - scrollY * 0.1}px)`;
-  }
-  
-  if (orb1) orb1.style.transform = `translate(${-currentX * 50}px, ${-currentY * 50 - scrollY * 0.15}px)`;
-  if (orb2) orb2.style.transform = `translate(${-currentX * 35}px, ${-currentY * 35 - scrollY * 0.1}px)`;
-  if (orb3) orb3.style.transform = `translate(${-currentX * 60}px, ${-currentY * 60 - scrollY * 0.2}px)`;
-  
-  hexes.forEach((hex, i) => {
-    if (hex) {
-      const speed = 20 + (i * 10);
-      hex.style.transform = `translate(${-currentX * speed}px, ${-currentY * speed - scrollY * 0.05}px) rotate(${currentX * 10}deg)`;
-    }
-  });
-  
-  circuits.forEach((circuit, i) => {
-    if (circuit) {
-      const speed = 15 + (i * 5);
-      circuit.style.transform = `translateX(${-currentX * speed}px)`;
-      circuit.style.opacity = 0.3 + Math.abs(currentX) * 0.5;
-    }
-  });
-  
-  if (eyeInner) {
-    eyeInner.style.transform = `translate(${currentX * 25}px, ${currentY * 25}px)`;
-  }
-  if (robotEye) {
-    robotEye.style.transform = `translateY(calc(-50% + ${-currentY * 20}px))`;
-  }
-  
+  if (gridBg) gridBg.style.transform = `translate(${-currentX * 30}px, ${-currentY * 30 - scrollY * 0.1}px)`;
+  if (orb1) orb1.style.transform = `translate(${-currentX * 50}px, ${-currentY * 50}px)`;
+  if (orb2) orb2.style.transform = `translate(${-currentX * 35}px, ${-currentY * 35}px)`;
+  if (orb3) orb3.style.transform = `translate(${-currentX * 60}px, ${-currentY * 60}px)`;
+  if (eyeInner) eyeInner.style.transform = `translate(${currentX * 25}px, ${currentY * 25}px)`;
   requestAnimationFrame(animateParallax);
 }
 animateParallax();
 
-// =============================================
-// CREATE FLOATING PARTICLES
-// =============================================
+// PARTICLES
 const particlesContainer = document.getElementById('particles');
-const particleCount = 15;
-
-for (let i = 0; i < particleCount; i++) {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
-  particle.style.left = Math.random() * 100 + '%';
-  particle.style.top = Math.random() * 100 + '%';
-  particle.style.animationDelay = Math.random() * 5 + 's';
-  particle.style.opacity = 0.3 + Math.random() * 0.5;
-  particle.dataset.speedX = (Math.random() - 0.5) * 40;
-  particle.dataset.speedY = (Math.random() - 0.5) * 40;
-  particlesContainer.appendChild(particle);
+for (let i = 0; i < 15; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.top = Math.random() * 100 + '%';
+  particlesContainer.appendChild(p);
 }
 
-function animateParticles() {
-  const particles = document.querySelectorAll('.particle');
-  particles.forEach(particle => {
-    const speedX = parseFloat(particle.dataset.speedX);
-    const speedY = parseFloat(particle.dataset.speedY);
-    particle.style.transform = `translate(${-currentX * speedX}px, ${-currentY * speedY - scrollY * 0.05}px)`;
-  });
-  requestAnimationFrame(animateParticles);
-}
-animateParticles();
-
-// =============================================
-// CART SYSTEM
-// =============================================
+// CART
 let cart = JSON.parse(localStorage.getItem('nexcore_cart')) || [];
-
 function saveCart() {
   localStorage.setItem('nexcore_cart', JSON.stringify(cart));
   updateCartUI();
 }
-
 function updateCartUI() {
   const cartItems = document.getElementById('cartItems');
   const cartCount = document.getElementById('cartCount');
   const cartFooter = document.getElementById('cartFooter');
   const cartTotal = document.getElementById('cartTotal');
-  
-  cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-  
+  cartCount.textContent = cart.reduce((s, i) => s + i.quantity, 0);
   if (cart.length === 0) {
-    cartItems.innerHTML = `
-      <div class="empty-cart">
-        <div class="empty-cart-icon">📦</div>
-        <p>Cargo bay is empty</p>
-      </div>`;
+    cartItems.innerHTML = '<div class="empty-cart"><div class="empty-cart-icon">📦</div><p>Cargo bay is empty</p></div>';
     cartFooter.style.display = 'none';
     return;
   }
-  
   cartFooter.style.display = 'block';
   cartItems.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <div class="cart-item-img">
-        ${item.image ? `<img src="${item.image}" alt="${item.name}">` : '📦'}
-      </div>
+      <div class="cart-item-img">${item.image ? `<img src="${item.image}">` : '📦'}</div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-price">$${item.price.toFixed(2)}</div>
         <div class="cart-item-qty">
-          <button class="qty-btn" onclick="updateQty(${item.id}, -1)">−</button>
+          <button class="qty-btn" onclick="updateQty(${item.id},-1)">−</button>
           <span class="qty-num">${item.quantity}</span>
-          <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+          <button class="qty-btn" onclick="updateQty(${item.id},1)">+</button>
           <span class="remove-item" onclick="removeFromCart(${item.id})">REMOVE</span>
         </div>
       </div>
     </div>
   `).join('');
-  
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  cartTotal.textContent = `$${total.toFixed(2)}`;
+  cartTotal.textContent = '$' + cart.reduce((s, i) => s + i.price * i.quantity, 0).toFixed(2);
 }
-
-function addToCart(productId) {
-  const product = products.find(p => p.id === productId);
-  const existingItem = cart.find(item => item.id === productId);
-  
-  if (existingItem) {
-    existingItem.quantity++;
-  } else {
-    cart.push({ 
-      id: product.id, 
-      name: product.name, 
-      price: product.price, 
-      image: product.image, 
-      quantity: 1 
-    });
-  }
-  
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  const existing = cart.find(i => i.id === id);
+  if (existing) existing.quantity++;
+  else cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1 });
   saveCart();
   showToast('◈ Added to cargo bay');
 }
-
-function updateQty(productId, change) {
-  const item = cart.find(item => item.id === productId);
+function updateQty(id, change) {
+  const item = cart.find(i => i.id === id);
   if (item) {
     item.quantity += change;
-    if (item.quantity <= 0) removeFromCart(productId);
+    if (item.quantity <= 0) removeFromCart(id);
     else saveCart();
   }
 }
-
-function removeFromCart(productId) {
-  cart = cart.filter(item => item.id !== productId);
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
   saveCart();
 }
-
 function toggleCart() {
   document.getElementById('cartSidebar').classList.toggle('open');
   document.getElementById('cartOverlay').classList.toggle('open');
 }
-
-function showToast(message) {
+function showToast(msg) {
   const toast = document.getElementById('toast');
-  toast.textContent = message;
+  toast.textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
-
 function checkout() {
   if (cart.length === 0) return;
-  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  alert(`◈ CHECKOUT INITIATED\n\nTotal: $${total.toFixed(2)}\n\nIntegrate Stripe or PayPal for real payments.`);
+  alert('Total: $' + cart.reduce((s, i) => s + i.price * i.quantity, 0).toFixed(2) + '\n\nIntegrate Stripe or PayPal for payments.');
 }
 
-// =============================================
-// PRODUCT DISPLAY
-// =============================================
-function renderGrid(productsToShow = products) {
+// PRODUCTS
+function renderGrid(list = products) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
-  
-  grid.innerHTML = productsToShow.map(p => `
+  grid.innerHTML = list.map(p => `
     <div class="product-card" onclick="showDetail(${p.id})">
       <div class="product-img-wrap">
-        ${p.image ? `<img src="${p.image}" alt="${p.name}">` : `<span class="emoji-placeholder">📦</span>`}
+        ${p.image ? `<img src="${p.image}">` : '<span class="emoji-placeholder">📦</span>'}
         ${p.badge === 'new' ? '<span class="badge badge-new">◈ NEW</span>' : ''}
         ${p.badge === 'sale' ? '<span class="badge badge-sale">◈ SALE</span>' : ''}
         <div class="card-arrow">↗</div>
@@ -2783,62 +2188,70 @@ function renderGrid(productsToShow = products) {
         <div class="product-cat">◈ ${p.category.toUpperCase()}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-footer">
-          <div>
-            <span class="price">$${p.price.toFixed(2)}</span>
-            ${p.originalPrice ? `<span class="price-old">$${p.originalPrice.toFixed(2)}</span>` : ''}
-          </div>
+          <div><span class="price">$${p.price.toFixed(2)}</span>${p.originalPrice ? `<span class="price-old">$${p.originalPrice.toFixed(2)}</span>` : ''}</div>
           <div class="stars">${p.stars}</div>
         </div>
       </div>
     </div>
   `).join('');
-  
-  addCursorHover();
 }
-
-function filterProducts(category) {
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    const isActive = btn.textContent.toLowerCase().includes(category) || 
-                     (category === 'all' && btn.textContent.includes('All'));
-    btn.classList.toggle('active', isActive);
+function filterProducts(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(cat) || (cat === 'all' && b.textContent === 'All'));
   });
-  renderGrid(category === 'all' ? products : products.filter(p => p.category === category));
+  renderGrid(cat === 'all' ? products : products.filter(p => p.category === cat));
+}
+function showDetail(id) {
+  const p = products.find(x => x.id === id);
+  document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
+  document.getElementById('detail').style.display = 'block';
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-img">${p.image ? `<img src="${p.image}">` : '📦'}</div>
+    <div class="detail-meta">
+      <div class="detail-cat">◈ ${p.category.toUpperCase()}</div>
+      <div class="detail-name">${p.name}</div>
+      <div class="detail-price">$${p.price.toFixed(2)} ${p.originalPrice ? `<span style="font-size:18px;color:var(--muted);text-decoration:line-through">$${p.originalPrice.toFixed(2)}</span>` : ''}</div>
+      <div class="detail-desc">${p.desc}</div>
+      <div class="specs-grid">${p.specs.map(s => `<div class="spec"><div class="spec-key">${s.key}</div><div class="spec-val">${s.val}</div></div>`).join('')}</div>
+      <button class="add-btn" onclick="addToCart(${p.id})">◈ Add to Cargo — $${p.price.toFixed(2)}</button>
+    </div>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showHome() {
+  document.getElementById('detail').style.display = 'none';
+  showPage('home');
 }
 
-// =============================================
-// CONTACT FORM SUBMISSION
-// =============================================
-function handleSubmit(e) {
+// FAQ
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// CONTACT FORM
+document.getElementById('contactForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  
-  const form = document.getElementById('contactForm');
+  const form = this;
   const formData = new FormData(form);
-  
-  // Show loading state
   const submitBtn = document.getElementById('submitBtn');
   submitBtn.textContent = '◈ Sending...';
   submitBtn.disabled = true;
   
-  // Submit to Netlify
   fetch('/', {
     method: 'POST',
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(formData).toString()
   })
   .then(() => {
-    // Hide form fields
     document.getElementById('formFields').style.display = 'none';
-    // Show success message
     document.getElementById('formSuccess').style.display = 'block';
   })
-  .catch((error) => {
-    alert('Error submitting form. Please try again or email us directly at support@nexcore.com');
+  .catch(() => {
+    alert('Error sending message. Please try again.');
     submitBtn.textContent = '◈ Send Message';
     submitBtn.disabled = false;
   });
-  
-  return false;
-}
+});
 
 function resetForm() {
   document.getElementById('contactForm').reset();
@@ -2848,76 +2261,9 @@ function resetForm() {
   document.getElementById('submitBtn').disabled = false;
 }
 
-function showDetail(id) {
-  const p = products.find(x => x.id === id);
-  
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(page => {
-    page.classList.remove('active');
-  });
-  
-  // Show detail
-  document.getElementById('detail').style.display = 'block';
-  document.getElementById('detail-content').innerHTML = `
-    <div class="detail-img">
-      ${p.image ? `<img src="${p.image}" alt="${p.name}">` : '📦'}
-    </div>
-    <div class="detail-meta">
-      <div class="detail-cat">${p.category.toUpperCase()}</div>
-      <div class="detail-name">${p.name}</div>
-      <div class="detail-price">
-        $${p.price.toFixed(2)} 
-        ${p.originalPrice ? `<span style="font-size:18px;color:var(--muted);text-decoration:line-through">$${p.originalPrice.toFixed(2)}</span>` : ''}
-      </div>
-      <div class="detail-desc">${p.desc}</div>
-      <div class="specs-grid">
-        ${p.specs.map(s => `
-          <div class="spec">
-            <div class="spec-key">${s.key}</div>
-            <div class="spec-val">${s.val}</div>
-          </div>
-        `).join('')}
-      </div>
-      <button class="add-btn" onclick="addToCart(${p.id}); event.stopPropagation();">
-        ◈ Add to Cargo — $${p.price.toFixed(2)}
-      </button>
-    </div>
-  `;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showHome() {
-  document.getElementById('detail').style.display = 'none';
-  showPage('home');
-}
-
-// =============================================
-// FAQ TOGGLE
-// =============================================
-function toggleFaq(element) {
-  const faqItem = element.parentElement;
-  faqItem.classList.toggle('open');
-}
-
-// =============================================
-// CONTACT FORM HANDLING
-// =============================================
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  // The form will submit to Netlify naturally
-  // This just shows a success message after redirect
-});
-
-// Check if form was submitted successfully (URL contains success parameter)
-if (window.location.search.includes('success=true')) {
-  document.getElementById('contactForm').style.display = 'none';
-  document.getElementById('formSuccess').classList.add('show');
-  showPage('contact');
-}
-
-// =============================================
-// INITIALIZE
-// =============================================
+// INIT
 renderGrid();
 updateCartUI();
 </script>
 </body>
+</html>
