@@ -33,6 +33,30 @@
   }
   a { color: inherit; text-decoration: none; }
   
+  /* CURRENCY INDICATOR */
+  .currency-indicator {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 90;
+    background: rgba(3,6,10,0.95);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    transition: all 0.3s;
+    opacity: 0;
+  }
+  .currency-indicator.visible { opacity: 1; }
+  .currency-indicator .flag { font-size: 14px; }
+  .currency-indicator .code { color: var(--accent); font-weight: 700; }
+
   /* CURSOR */
   .cursor {
     position: fixed;
@@ -800,6 +824,12 @@
     color: var(--accent);
     margin-bottom: 0.5rem;
     text-shadow: var(--neon-glow);
+  }
+  .detail-price-converted {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
   }
   .detail-shipping {
     font-family: 'Space Mono', monospace;
@@ -1793,6 +1823,7 @@
     .faq-section { padding: 4rem 1.5rem; }
     .form-row { grid-template-columns: 1fr; }
     .form-group.full { grid-column: span 1; }
+    .currency-indicator { top: auto; bottom: 80px; right: 15px; }
   }
 </style>
 </head>
@@ -1801,6 +1832,13 @@
 <!-- CURSOR -->
 <div class="cursor" id="cursor"></div>
 <div class="cursor-dot" id="cursorDot"></div>
+
+<!-- CURRENCY INDICATOR -->
+<div class="currency-indicator" id="currencyIndicator">
+  <span class="flag" id="currencyFlag">🌍</span>
+  <span id="currencyLabel">Detecting...</span>
+  <span class="code" id="currencyCode"></span>
+</div>
 
 <!-- BACKGROUND -->
 <div class="parallax-wrap" id="parallaxWrap">
@@ -2135,17 +2173,12 @@ const products = [
     shortName: "X68HE Attack Shark",
     category: "keyboard",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S8c0daf341216466f9c95160d2f8a25e60.jpg",
-    price: 300,
+    priceILS: 300,
     badge: "hot",
     stars: "★★★★★",
     desc: "Dominate the competition with the X68HE Attack Shark Magnetic Gaming Keyboard. Featuring revolutionary 0.01mm rapid trigger technology and an insane 8000Hz polling rate, every keystroke is registered with surgical precision. The SOCD/Rs system and 0.125ms response time give you the competitive edge you need. Built for pro gamers who refuse to compromise.",
     aliLink: "https://he.aliexpress.com/item/1005008813162763.html",
-    variants: [
-      "Black - Linear Switches",
-      "White - Linear Switches",
-      "Black - Tactile Switches",
-      "White - Tactile Switches"
-    ],
+    variants: ["Black - Linear Switches","White - Linear Switches","Black - Tactile Switches","White - Tactile Switches"],
     specs: [
       { key: "Polling Rate", val: "8000Hz" },
       { key: "Response", val: "0.125ms" },
@@ -2159,17 +2192,12 @@ const products = [
     shortName: "Attack Shark X11",
     category: "mouse",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S536ca519a42e432c98bdc9bef852a4faQ.jpg",
-    price: 160,
+    priceILS: 160,
     badge: "new",
     stars: "★★★★★",
     desc: "Experience wireless freedom with the Attack Shark X11 featuring the legendary PixArt PAW3311 sensor. Triple connectivity modes (Bluetooth, 2.4G Wireless, Wired) ensure you're always connected. The ergonomic design and premium charging dock make this the ultimate wireless gaming companion. Ultra-lightweight, ultra-responsive, ultra-precise.",
     aliLink: "https://he.aliexpress.com/item/1005008684858657.html",
-    variants: [
-      "Black",
-      "White",
-      "Pink",
-      "Blue"
-    ],
+    variants: ["Black","White","Pink","Blue"],
     specs: [
       { key: "Sensor", val: "PAW3311" },
       { key: "Connection", val: "BT/2.4G/Wired" },
@@ -2183,19 +2211,12 @@ const products = [
     shortName: "Ajazz AK820 Pro",
     category: "keyboard",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S6f585d88897740349b9940b0e02d5e5aB.jpg",
-    price: 170,
+    priceILS: 170,
     badge: "sale",
     stars: "★★★★★",
     desc: "The Ajazz AK820 Pro redefines what a gaming keyboard can be. Triple connectivity with Bluetooth 5.1, 2.4G wireless, and USB-C wired modes. The premium gasket mount construction delivers a satisfying typing experience, while hot-swappable switches let you customize your feel. The integrated knob adds intuitive volume and media control. Your setup deserves this upgrade.",
     aliLink: "https://he.aliexpress.com/item/1005007539958713.html",
-    variants: [
-      "Black - Red Switches",
-      "White - Red Switches",
-      "Black - Blue Switches",
-      "White - Blue Switches",
-      "Black - Brown Switches",
-      "White - Brown Switches"
-    ],
+    variants: ["Black - Red Switches","White - Red Switches","Black - Blue Switches","White - Blue Switches","Black - Brown Switches","White - Brown Switches"],
     specs: [
       { key: "Connection", val: "BT5.1/2.4G/Wired" },
       { key: "Mount", val: "Gasket" },
@@ -2209,7 +2230,126 @@ const products = [
 // PAYPAL CONFIG
 // =============================================
 const PAYPAL_EMAIL = "lonergonefr@gmail.com";
-const CURRENCY = "₪";
+
+// =============================================
+// CURRENCY SYSTEM
+// =============================================
+
+// Country code → { currency code, symbol, flag emoji }
+const countryCurrencyMap = {
+  AF:{c:"AFN",s:"؋",f:"🇦🇫"}, AL:{c:"ALL",s:"L",f:"🇦🇱"}, DZ:{c:"DZD",s:"د.ج",f:"🇩🇿"},
+  AR:{c:"ARS",s:"$",f:"🇦🇷"}, AM:{c:"AMD",s:"֏",f:"🇦🇲"}, AU:{c:"AUD",s:"A$",f:"🇦🇺"},
+  AT:{c:"EUR",s:"€",f:"🇦🇹"}, AZ:{c:"AZN",s:"₼",f:"🇦🇿"}, BD:{c:"BDT",s:"৳",f:"🇧🇩"},
+  BY:{c:"BYN",s:"Br",f:"🇧🇾"}, BE:{c:"EUR",s:"€",f:"🇧🇪"}, BA:{c:"BAM",s:"KM",f:"🇧🇦"},
+  BR:{c:"BRL",s:"R$",f:"🇧🇷"}, BG:{c:"BGN",s:"лв",f:"🇧🇬"}, CA:{c:"CAD",s:"C$",f:"🇨🇦"},
+  CL:{c:"CLP",s:"$",f:"🇨🇱"}, CN:{c:"CNY",s:"¥",f:"🇨🇳"}, CO:{c:"COP",s:"$",f:"🇨🇴"},
+  HR:{c:"EUR",s:"€",f:"🇭🇷"}, CZ:{c:"CZK",s:"Kč",f:"🇨🇿"}, DK:{c:"DKK",s:"kr",f:"🇩🇰"},
+  EG:{c:"EGP",s:"£",f:"🇪🇬"}, EE:{c:"EUR",s:"€",f:"🇪🇪"}, ET:{c:"ETB",s:"Br",f:"🇪🇹"},
+  FI:{c:"EUR",s:"€",f:"🇫🇮"}, FR:{c:"EUR",s:"€",f:"🇫🇷"}, GE:{c:"GEL",s:"₾",f:"🇬🇪"},
+  DE:{c:"EUR",s:"€",f:"🇩🇪"}, GH:{c:"GHS",s:"₵",f:"🇬🇭"}, GR:{c:"EUR",s:"€",f:"🇬🇷"},
+  HK:{c:"HKD",s:"HK$",f:"🇭🇰"}, HU:{c:"HUF",s:"Ft",f:"🇭🇺"}, IN:{c:"INR",s:"₹",f:"🇮🇳"},
+  ID:{c:"IDR",s:"Rp",f:"🇮🇩"}, IR:{c:"IRR",s:"﷼",f:"🇮🇷"}, IQ:{c:"IQD",s:"ع.د",f:"🇮🇶"},
+  IE:{c:"EUR",s:"€",f:"🇮🇪"}, IL:{c:"ILS",s:"₪",f:"🇮🇱"}, IT:{c:"EUR",s:"€",f:"🇮🇹"},
+  JP:{c:"JPY",s:"¥",f:"🇯🇵"}, JO:{c:"JOD",s:"د.ا",f:"🇯🇴"}, KZ:{c:"KZT",s:"₸",f:"🇰🇿"},
+  KE:{c:"KES",s:"KSh",f:"🇰🇪"}, KR:{c:"KRW",s:"₩",f:"🇰🇷"}, KW:{c:"KWD",s:"د.ك",f:"🇰🇼"},
+  LV:{c:"EUR",s:"€",f:"🇱🇻"}, LT:{c:"EUR",s:"€",f:"🇱🇹"}, LU:{c:"EUR",s:"€",f:"🇱🇺"},
+  MY:{c:"MYR",s:"RM",f:"🇲🇾"}, MX:{c:"MXN",s:"$",f:"🇲🇽"}, MA:{c:"MAD",s:"د.م.",f:"🇲🇦"},
+  NL:{c:"EUR",s:"€",f:"🇳🇱"}, NZ:{c:"NZD",s:"NZ$",f:"🇳🇿"}, NG:{c:"NGN",s:"₦",f:"🇳🇬"},
+  NO:{c:"NOK",s:"kr",f:"🇳🇴"}, PK:{c:"PKR",s:"₨",f:"🇵🇰"}, PE:{c:"PEN",s:"S/",f:"🇵🇪"},
+  PH:{c:"PHP",s:"₱",f:"🇵🇭"}, PL:{c:"PLN",s:"zł",f:"🇵🇱"}, PT:{c:"EUR",s:"€",f:"🇵🇹"},
+  QA:{c:"QAR",s:"﷼",f:"🇶🇦"}, RO:{c:"RON",s:"lei",f:"🇷🇴"}, RU:{c:"RUB",s:"₽",f:"🇷🇺"},
+  SA:{c:"SAR",s:"﷼",f:"🇸🇦"}, RS:{c:"RSD",s:"din",f:"🇷🇸"}, SG:{c:"SGD",s:"S$",f:"🇸🇬"},
+  ZA:{c:"ZAR",s:"R",f:"🇿🇦"}, ES:{c:"EUR",s:"€",f:"🇪🇸"}, SE:{c:"SEK",s:"kr",f:"🇸🇪"},
+  CH:{c:"CHF",s:"Fr",f:"🇨🇭"}, TW:{c:"TWD",s:"NT$",f:"🇹🇼"}, TH:{c:"THB",s:"฿",f:"🇹🇭"},
+  TN:{c:"TND",s:"د.ت",f:"🇹🇳"}, TR:{c:"TRY",s:"₺",f:"🇹🇷"}, UA:{c:"UAH",s:"₴",f:"🇺🇦"},
+  AE:{c:"AED",s:"د.إ",f:"🇦🇪"}, GB:{c:"GBP",s:"£",f:"🇬🇧"}, US:{c:"USD",s:"$",f:"🇺🇸"},
+  UZ:{c:"UZS",s:"лв",f:"🇺🇿"}, VN:{c:"VND",s:"₫",f:"🇻🇳"}, YE:{c:"YER",s:"﷼",f:"🇾🇪"}
+};
+
+// Currency state
+let currencyState = {
+  code: "ILS",
+  symbol: "₪",
+  flag: "🇮🇱",
+  rate: 1,        // rate vs ILS
+  country: "IL",
+  loaded: false
+};
+
+// Convert ILS price to display price
+function convertPrice(priceILS) {
+  if (!currencyState.loaded || currencyState.rate === 1 && currencyState.code === "ILS") {
+    return { display: "₪" + priceILS, raw: priceILS };
+  }
+  const converted = priceILS * currencyState.rate;
+  // Round nicely based on value
+  let rounded;
+  if (converted < 5) rounded = Math.round(converted * 100) / 100;
+  else if (converted < 100) rounded = Math.round(converted * 10) / 10;
+  else rounded = Math.round(converted);
+  return {
+    display: currencyState.symbol + rounded.toLocaleString(),
+    raw: rounded
+  };
+}
+
+// Detect country via IP, then fetch exchange rate
+async function initCurrency() {
+  const indicator = document.getElementById('currencyIndicator');
+  const flagEl = document.getElementById('currencyFlag');
+  const labelEl = document.getElementById('currencyLabel');
+  const codeEl = document.getElementById('currencyCode');
+
+  try {
+    // Step 1: Detect country from IP
+    const geoRes = await fetch('https://ipapi.co/json/');
+    const geoData = await geoRes.json();
+    const countryCode = geoData.country_code || 'IL';
+    const currencyCode = geoData.currency || 'ILS';
+
+    const meta = countryCurrencyMap[countryCode];
+    const flag = meta ? meta.f : '🌍';
+    const symbol = meta ? meta.s : currencyCode;
+
+    // Step 2: Fetch live exchange rate (ILS → detected currency)
+    let rate = 1;
+    if (currencyCode !== 'ILS') {
+      // exchangerate-api free endpoint (no key needed for base rates)
+      const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/ILS`);
+      const rateData = await rateRes.json();
+      rate = rateData.rates[currencyCode] || 1;
+    }
+
+    currencyState = {
+      code: currencyCode,
+      symbol: symbol,
+      flag: flag,
+      rate: rate,
+      country: countryCode,
+      loaded: true
+    };
+
+    // Update indicator
+    flagEl.textContent = flag;
+    labelEl.textContent = geoData.country_name || countryCode;
+    codeEl.textContent = currencyCode;
+    indicator.classList.add('visible');
+
+    // Re-render everything with new currency
+    renderGrid();
+    updateCartUI();
+
+  } catch (err) {
+    // Silently fall back to ILS if anything fails
+    currencyState.loaded = true;
+    flagEl.textContent = '🇮🇱';
+    labelEl.textContent = 'Israel';
+    codeEl.textContent = 'ILS';
+    indicator.classList.add('visible');
+    renderGrid();
+    updateCartUI();
+  }
+}
 
 // =============================================
 // CART
@@ -2236,24 +2376,28 @@ function updateCartUI() {
   }
   
   cartFooter.style.display = 'block';
-  cartItems.innerHTML = cart.map(item => `
-    <div class="cart-item">
-      <div class="cart-item-img">${item.image ? `<img src="${item.image}" onerror="this.style.display='none'">` : '📦'}</div>
-      <div class="cart-item-info">
-        <div class="cart-item-name">${item.shortName || item.name}</div>
-        <div class="cart-item-variant">${item.variant || ''}</div>
-        <div class="cart-item-price">${CURRENCY}${item.price}</div>
-        <div class="cart-item-qty">
-          <button class="qty-btn" onclick="updateQty('${item.cartId}',-1)">−</button>
-          <span class="qty-num">${item.quantity}</span>
-          <button class="qty-btn" onclick="updateQty('${item.cartId}',1)">+</button>
-          <span class="remove-item" onclick="removeFromCart('${item.cartId}')">REMOVE</span>
+  cartItems.innerHTML = cart.map(item => {
+    const converted = convertPrice(item.priceILS);
+    return `
+      <div class="cart-item">
+        <div class="cart-item-img">${item.image ? `<img src="${item.image}" onerror="this.style.display='none'">` : '📦'}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.shortName || item.name}</div>
+          <div class="cart-item-variant">${item.variant || ''}</div>
+          <div class="cart-item-price">${converted.display}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="updateQty('${item.cartId}',-1)">−</button>
+            <span class="qty-num">${item.quantity}</span>
+            <button class="qty-btn" onclick="updateQty('${item.cartId}',1)">+</button>
+            <span class="remove-item" onclick="removeFromCart('${item.cartId}')">REMOVE</span>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
   
-  cartTotal.textContent = CURRENCY + cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const totalILS = cart.reduce((s, i) => s + i.priceILS * i.quantity, 0);
+  cartTotal.textContent = convertPrice(totalILS).display;
 }
 
 function addToCart(id, variant) {
@@ -2269,7 +2413,7 @@ function addToCart(id, variant) {
       id: product.id, 
       name: product.name,
       shortName: product.shortName,
-      price: product.price, 
+      priceILS: product.priceILS,
       image: product.image,
       variant: variant || '',
       quantity: 1 
@@ -2311,39 +2455,43 @@ function showToast(msg) {
 // =============================================
 function openCheckoutModal() {
   if (cart.length === 0) return;
-  
-  toggleCart(); // Close cart sidebar
+  toggleCart();
   
   const modal = document.getElementById('checkoutModal');
   const summary = document.getElementById('orderSummary');
-  const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const totalILS = cart.reduce((s, i) => s + i.priceILS * i.quantity, 0);
+  const totalConverted = convertPrice(totalILS);
   
   summary.innerHTML = `
     <div class="order-summary-title">◈ Order Summary</div>
-    ${cart.map(item => `
-      <div class="order-item">
-        <div class="order-item-img">${item.image ? `<img src="${item.image}" onerror="this.style.display='none'">` : '📦'}</div>
-        <div class="order-item-info">
-          <div class="order-item-name">${item.shortName || item.name}</div>
-          <div class="order-item-variant">${item.variant ? item.variant + ' • ' : ''}Qty: ${item.quantity}</div>
+    ${cart.map(item => {
+      const conv = convertPrice(item.priceILS * item.quantity);
+      return `
+        <div class="order-item">
+          <div class="order-item-img">${item.image ? `<img src="${item.image}" onerror="this.style.display='none'">` : '📦'}</div>
+          <div class="order-item-info">
+            <div class="order-item-name">${item.shortName || item.name}</div>
+            <div class="order-item-variant">${item.variant ? item.variant + ' • ' : ''}Qty: ${item.quantity}</div>
+          </div>
+          <div class="order-item-price">${conv.display}</div>
         </div>
-        <div class="order-item-price">${CURRENCY}${item.price * item.quantity}</div>
-      </div>
-    `).join('')}
+      `;
+    }).join('')}
     <div class="order-total">
       <div>
         <div class="order-total-label">Total</div>
+        ${currencyState.code !== 'ILS' ? `<div style="font-size:11px;color:var(--muted)">≈ ₪${totalILS} ILS</div>` : ''}
         <div style="font-size:11px;color:var(--success)">✓ Free Worldwide Shipping</div>
       </div>
-      <div class="order-total-price">${CURRENCY}${total}</div>
+      <div class="order-total-price">${totalConverted.display}</div>
     </div>
   `;
   
-  // Store order details for form
+  // Always store ILS amount for PayPal (PayPal receives ILS)
   document.getElementById('orderDetailsInput').value = cart.map(item => 
-    `${item.name} (${item.variant || 'Default'}) x${item.quantity} = ${CURRENCY}${item.price * item.quantity}`
+    `${item.name} (${item.variant || 'Default'}) x${item.quantity} = ₪${item.priceILS * item.quantity} ILS`
   ).join(' | ');
-  document.getElementById('orderTotalInput').value = CURRENCY + total;
+  document.getElementById('orderTotalInput').value = `₪${totalILS} ILS (${totalConverted.display} ${currencyState.code})`;
   
   modal.classList.add('open');
 }
@@ -2352,36 +2500,27 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal').classList.remove('open');
 }
 
-// Handle checkout form submission
 document.getElementById('checkoutForm').addEventListener('submit', function(e) {
   e.preventDefault();
   
   const form = this;
   const formData = new FormData(form);
-  const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const totalILS = cart.reduce((s, i) => s + i.priceILS * i.quantity, 0);
   const btn = document.getElementById('paypalBtn');
   
   btn.textContent = 'Processing...';
   btn.disabled = true;
   
-  // First, save order to Netlify
   fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(formData).toString()
   })
   .then(() => {
-    // Build PayPal URL
     const itemName = cart.map(i => `${i.shortName || i.name} (${i.variant || 'Default'}) x${i.quantity}`).join(', ');
-    
-    // Create PayPal payment link
-    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(PAYPAL_EMAIL)}&item_name=${encodeURIComponent('NEXCORE Order: ' + itemName)}&amount=${total}&currency_code=ILS&no_shipping=0&return=${encodeURIComponent(window.location.origin + '/?order=success')}&cancel_return=${encodeURIComponent(window.location.origin + '/?order=cancelled')}`;
-    
-    // Clear cart
+    const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${encodeURIComponent(PAYPAL_EMAIL)}&item_name=${encodeURIComponent('NEXCORE Order: ' + itemName)}&amount=${totalILS}&currency_code=ILS&no_shipping=0&return=${encodeURIComponent(window.location.origin + '/?order=success')}&cancel_return=${encodeURIComponent(window.location.origin + '/?order=cancelled')}`;
     cart = [];
     saveCart();
-    
-    // Redirect to PayPal
     window.location.href = paypalUrl;
   })
   .catch(err => {
@@ -2391,7 +2530,6 @@ document.getElementById('checkoutForm').addEventListener('submit', function(e) {
   });
 });
 
-// Check for order status
 if (window.location.search.includes('order=success')) {
   setTimeout(() => {
     alert('🎉 Thank you for your order!\n\nYou will receive a confirmation email shortly.\n\nYour order will be shipped within 1-3 business days.');
@@ -2406,26 +2544,32 @@ function renderGrid(list = products) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
   
-  grid.innerHTML = list.map(p => `
-    <div class="product-card" onclick="showDetail(${p.id})">
-      <div class="product-img-wrap">
-        <img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span class=\\'emoji-placeholder\\'>📦</span>'">
-        ${p.badge === 'new' ? '<span class="badge badge-new">◈ NEW</span>' : ''}
-        ${p.badge === 'sale' ? '<span class="badge badge-sale">◈ SALE</span>' : ''}
-        ${p.badge === 'hot' ? '<span class="badge badge-hot">🔥 HOT</span>' : ''}
-        <div class="card-arrow">↗</div>
-      </div>
-      <div class="product-info">
-        <div class="product-cat">◈ ${p.category.toUpperCase()}</div>
-        <div class="product-name">${p.shortName || p.name}</div>
-        <div class="product-footer">
-          <div><span class="price">${CURRENCY}${p.price}</span></div>
-          <div class="stars">${p.stars}</div>
+  grid.innerHTML = list.map(p => {
+    const conv = convertPrice(p.priceILS);
+    return `
+      <div class="product-card" onclick="showDetail(${p.id})">
+        <div class="product-img-wrap">
+          <img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span class=\\'emoji-placeholder\\'>📦</span>'">
+          ${p.badge === 'new' ? '<span class="badge badge-new">◈ NEW</span>' : ''}
+          ${p.badge === 'sale' ? '<span class="badge badge-sale">◈ SALE</span>' : ''}
+          ${p.badge === 'hot' ? '<span class="badge badge-hot">🔥 HOT</span>' : ''}
+          <div class="card-arrow">↗</div>
         </div>
-        <div class="free-shipping">🌍 Free Worldwide Shipping</div>
+        <div class="product-info">
+          <div class="product-cat">◈ ${p.category.toUpperCase()}</div>
+          <div class="product-name">${p.shortName || p.name}</div>
+          <div class="product-footer">
+            <div>
+              <span class="price">${conv.display}</span>
+              ${currencyState.code !== 'ILS' ? `<span style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-left:8px;">≈ ₪${p.priceILS}</span>` : ''}
+            </div>
+            <div class="stars">${p.stars}</div>
+          </div>
+          <div class="free-shipping">🌍 Free Worldwide Shipping</div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function filterProducts(cat) {
@@ -2437,6 +2581,8 @@ function filterProducts(cat) {
 
 function showDetail(id) {
   const p = products.find(x => x.id === id);
+  const conv = convertPrice(p.priceILS);
+  
   document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
   document.getElementById('detail').style.display = 'block';
   
@@ -2445,7 +2591,8 @@ function showDetail(id) {
     <div class="detail-meta">
       <div class="detail-cat">◈ ${p.category.toUpperCase()}</div>
       <div class="detail-name">${p.name}</div>
-      <div class="detail-price">${CURRENCY}${p.price}</div>
+      <div class="detail-price">${conv.display}</div>
+      ${currencyState.code !== 'ILS' ? `<div class="detail-price-converted">≈ ₪${p.priceILS} ILS • Displayed in ${currencyState.code} (${currencyState.flag})</div>` : ''}
       <div class="detail-shipping">🌍 Free Worldwide Shipping</div>
       <div class="detail-desc">${p.desc}</div>
       
@@ -2453,7 +2600,7 @@ function showDetail(id) {
         <div class="variant-section">
           <div class="variant-label">Select Version</div>
           <select class="variant-select" id="variantSelect">
-            ${p.variants.map((v, i) => `<option value="${v}">${v}</option>`).join('')}
+            ${p.variants.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
         </div>
       ` : ''}
@@ -2462,7 +2609,7 @@ function showDetail(id) {
         ${p.specs.map(s => `<div class="spec"><div class="spec-key">${s.key}</div><div class="spec-val">${s.val}</div></div>`).join('')}
       </div>
       
-      <button class="buy-btn" onclick="buyNow(${p.id})">◈ Buy Now — ${CURRENCY}${p.price}</button>
+      <button class="buy-btn" onclick="buyNow(${p.id})">◈ Buy Now — ${conv.display}</button>
       <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
     </div>
   `;
@@ -2479,8 +2626,6 @@ function addToCartFromDetail(id) {
 function buyNow(id) {
   const variantSelect = document.getElementById('variantSelect');
   const variant = variantSelect ? variantSelect.value : null;
-  
-  // Clear cart and add just this item
   cart = [];
   addToCart(id, variant);
   openCheckoutModal();
@@ -2604,9 +2749,12 @@ for (let i = 0; i < 10; i++) {
   particlesContainer.appendChild(p);
 }
 
-// Initialize
-renderGrid();
+// =============================================
+// INIT
+// =============================================
+renderGrid(); // Render in ILS immediately (no flash)
 updateCartUI();
+initCurrency(); // Then detect & convert asynchronously
 </script>
 </body>
 </html>
