@@ -2324,173 +2324,63 @@
   </div>
 
   <div class="contact-container">
-    <div class="contact-form-wrap">
-      <div class="contact-form-title">◈ Send Us a Message</div>
-      
-      <!-- IMPORTANT: This form uses Netlify Forms to send you emails -->
-      <form 
-        id="contactForm" 
-        name="contact" 
-        method="POST" 
-        data-netlify="true" 
-        netlify-honeypot="bot-field"
-        action="/thanks.html"
-      >
-        <input type="hidden" name="form-name" value="contact">
-        <p style="display:none;">
-          <label>Don't fill this out: <input name="bot-field"></label>
-        </p>
-        
-        <div class="form-group">
-          <label class="form-label">Your Name *</label>
-          <input type="text" name="name" class="form-input" placeholder="John Doe" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Email Address *</label>
-          <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Subject *</label>
-          <select name="subject" class="form-select" required>
-            <option value="">Select a topic...</option>
-            <option value="order-status">Order Status</option>
-            <option value="shipping">Shipping Question</option>
-            <option value="returns">Returns & Refunds</option>
-            <option value="product-question">Product Question</option>
-            <option value="technical-support">Technical Support</option>
-            <option value="billing">Billing Issue</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Order Number (Optional)</label>
-          <input type="text" name="order-number" class="form-input" placeholder="NEX-XXXXXX">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Your Message *</label>
-          <textarea name="message" class="form-textarea" placeholder="Describe your question or issue in detail..." required></textarea>
-        </div>
-
-        <button type="submit" class="form-submit">◈ Send Message</button>
-      </form>
-
-      <div class="form-success" id="formSuccess">
-        <div class="form-success-icon">✓</div>
-        <div class="form-success-title">Message Sent!</div>
-        <div class="form-success-text">We've received your message and will respond within 24 hours. Check your email for updates.</div>
+<div class="contact-form-wrap">
+  <div class="contact-form-title">◈ Send Us a Message</div>
+  
+  <form 
+    id="contactForm" 
+    name="contact" 
+    method="POST" 
+    data-netlify="true"
+    onsubmit="return handleSubmit(event)"
+  >
+    <input type="hidden" name="form-name" value="contact">
+    
+    <div id="formFields">
+      <div class="form-group">
+        <label class="form-label">Your Name *</label>
+        <input type="text" name="name" class="form-input" placeholder="John Doe" required>
       </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address *</label>
+        <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Subject *</label>
+        <select name="subject" class="form-select" required>
+          <option value="">Select a topic...</option>
+          <option value="order-status">Order Status</option>
+          <option value="shipping">Shipping Question</option>
+          <option value="returns">Returns & Refunds</option>
+          <option value="product-question">Product Question</option>
+          <option value="technical-support">Technical Support</option>
+          <option value="billing">Billing Issue</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Order Number (Optional)</label>
+        <input type="text" name="order-number" class="form-input" placeholder="NEX-XXXXXX">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Your Message *</label>
+        <textarea name="message" class="form-textarea" placeholder="Describe your question or issue in detail..." required></textarea>
+      </div>
+
+      <button type="submit" class="form-submit" id="submitBtn">◈ Send Message</button>
     </div>
 
-    <div class="contact-info-wrap">
-      <div class="contact-info-card">
-        <div class="contact-info-icon">📧</div>
-        <div class="contact-info-title">Email Us</div>
-        <div class="contact-info-text">
-          General inquiries: <a href="mailto:hello@nexcore.com">hello@nexcore.com</a><br>
-          Support: <a href="mailto:support@nexcore.com">support@nexcore.com</a>
-        </div>
-      </div>
-
-      <div class="contact-info-card">
-        <div class="contact-info-icon">⚡</div>
-        <div class="contact-info-title">Response Time</div>
-        <div class="contact-info-text">
-          We typically respond within <strong>2-4 hours</strong> during business hours. For urgent matters, please mark your subject accordingly.
-        </div>
-      </div>
-
-      <div class="contact-info-card">
-        <div class="contact-info-icon">🌍</div>
-        <div class="contact-info-title">Business Hours</div>
-        <div class="contact-info-text">
-          Monday - Friday: 9:00 AM - 8:00 PM EST<br>
-          Saturday - Sunday: 10:00 AM - 6:00 PM EST
-        </div>
-      </div>
-
-      <div class="contact-info-card">
-        <div class="contact-info-icon">📦</div>
-        <div class="contact-info-title">Order Issues?</div>
-        <div class="contact-info-text">
-          For fastest resolution, please include your order number (found in your confirmation email) when contacting us about an order.
-        </div>
-      </div>
+    <div class="form-success" id="formSuccess" style="display:none;">
+      <div class="form-success-icon">✓</div>
+      <div class="form-success-title">Message Sent!</div>
+      <div class="form-success-text">We've received your message and will respond within 24 hours. Check your email for updates.</div>
+      <button type="button" class="btn-ghost" style="margin-top:2rem;" onclick="resetForm()">Send Another Message</button>
     </div>
-  </div>
-
-  <div class="faq-section">
-    <div class="faq-header">
-      <div class="section-label" style="justify-content: center;">FAQ</div>
-      <h2>Frequently Asked Questions</h2>
-    </div>
-
-    <div class="faq-grid">
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">How long does shipping take?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">We ship orders within 24-48 hours. Domestic orders typically arrive in 3-5 business days. International shipping takes 7-14 business days depending on location. You'll receive tracking information via email once your order ships.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">What's your return policy?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">We offer a 30-day hassle-free return policy. If you're not satisfied with your purchase, simply contact us for a return label. Items must be in original condition with all packaging. Refunds are processed within 3-5 business days after we receive your return.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Do you ship internationally?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Yes! We ship to over 50 countries worldwide. International shipping rates and delivery times vary by location. Customs fees and import duties are the responsibility of the buyer and are not included in our shipping charges.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Are your products authentic?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Absolutely. We source all products directly from manufacturers or authorized distributors. Every item comes with full manufacturer warranty. We never sell counterfeit or refurbished items as new.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">How do I track my order?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Once your order ships, you'll receive an email with tracking information. You can use this number on our carrier's website to track your package in real-time. If you haven't received tracking within 48 hours of ordering, please contact support.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">What payment methods do you accept?</div>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay. All transactions are secured with 256-bit SSL encryption for your protection.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <footer>
-    <div class="footer-logo" onclick="showPage('home')">◈ NEXCORE</div>
-    <div class="footer-text">© 2025 Nexcore Systems. All rights reserved.</div>
-    <div class="footer-links">
-      <a href="#" onclick="showPage('home')">Home</a>
-      <a href="#" onclick="showPage('why-us')">Why Us</a>
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
-  </footer>
-</div>
-
-<!-- DETAIL PAGE -->
-<div id="detail">
-  <section class="section">
-    <button class="back-btn" onclick="showHome()">← Return to Systems</button>
-    <div class="detail-wrap" id="detail-content"></div>
-  </section>
+  </form>
 </div>
 
 <script>
@@ -2913,6 +2803,49 @@ function filterProducts(category) {
     btn.classList.toggle('active', isActive);
   });
   renderGrid(category === 'all' ? products : products.filter(p => p.category === category));
+}
+
+// =============================================
+// CONTACT FORM SUBMISSION
+// =============================================
+function handleSubmit(e) {
+  e.preventDefault();
+  
+  const form = document.getElementById('contactForm');
+  const formData = new FormData(form);
+  
+  // Show loading state
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.textContent = '◈ Sending...';
+  submitBtn.disabled = true;
+  
+  // Submit to Netlify
+  fetch('/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(formData).toString()
+  })
+  .then(() => {
+    // Hide form fields
+    document.getElementById('formFields').style.display = 'none';
+    // Show success message
+    document.getElementById('formSuccess').style.display = 'block';
+  })
+  .catch((error) => {
+    alert('Error submitting form. Please try again or email us directly at support@nexcore.com');
+    submitBtn.textContent = '◈ Send Message';
+    submitBtn.disabled = false;
+  });
+  
+  return false;
+}
+
+function resetForm() {
+  document.getElementById('contactForm').reset();
+  document.getElementById('formFields').style.display = 'block';
+  document.getElementById('formSuccess').style.display = 'none';
+  document.getElementById('submitBtn').textContent = '◈ Send Message';
+  document.getElementById('submitBtn').disabled = false;
 }
 
 function showDetail(id) {
