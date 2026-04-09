@@ -7,6 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
+  .variant-section {
+    margin: 20px 0;
+    padding-top: 15px;
+    border-top: 1px solid #333; /* Adds a nice separator line */
+}
+
+.variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+}
+
   .variant-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -2536,27 +2548,28 @@ function showDetail(id) {
         <div class="detail-img">
             <img id="mainProductImage" src="${p.image}" alt="${p.name}" onerror="this.outerHTML=''">
         </div>
+        
         <div class="detail-meta">
             <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
             <div class="detail-name">${p.name}</div>
             <div class="detail-price">${CURRENCY}${p.price}</div>
             <div class="detail-shipping">🌍 Free Worldwide Shipping</div>
             <div class="detail-desc">${p.desc}</div>
-        </div>
 
-        ${p.variants && p.variants.length > 0 ? `
-    <div class="variant-section">
-        <div class="variant-label">Select Version</div>
-        <div class="variant-grid">
-            ${p.variants.map(v => `
-                <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
-                    <img src="images/${v.img}" alt="${v.name}" class="variant-preview">
-                    <span>${v.name}</span>
+            ${p.variants && p.variants.length > 0 ? `
+                <div class="variant-section">
+                    <div class="variant-label">Select Version</div>
+                    <div class="variant-grid">
+                        ${p.variants.map(v => `
+                            <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
+                                <img src="images/${v.img}" alt="${v.name}" class="variant-preview">
+                                <span>${v.name}</span>
+                            </div>
+                        `).join('')}
+                    </div>
                 </div>
-            `).join('')}
+            ` : ''}
         </div>
-    </div>
-` : ''}
 
         <div class="specs-grid">
             ${p.specs.map(s => `
