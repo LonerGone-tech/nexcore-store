@@ -2146,16 +2146,16 @@ const products = [
     category: "keyboard",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S8c0daf341216466f9c95160d2f8a25e60.jpg",
     price: 300,
-    inStock: false,
+    inStock: true,
     badge: "hot",
     stars: "★★★★★",
     desc: "Dominate the competition with the X68HE Attack Shark Magnetic Gaming Keyboard. Featuring revolutionary 0.01mm rapid trigger technology and an insane 8000Hz polling rate, every keystroke is registered with surgical precision. The SOCD/Rs system and 0.125ms response time give you the competitive edge you need. Built for pro gamers who refuse to compromise.",
     aliLink: "https://he.aliexpress.com/item/1005008813162763.html",
     variants: [
-      "Black - Linear Switches",
-      "White - Linear Switches",
-      "Black - Tactile Switches",
-      "White - Tactile Switches"
+        { name: "Black (Original)", img: "x68he-black.png" },
+        { name: "Rose Red", img: "x68he-rose-red.png" },
+        { name: "White High Wire", img: "x68he-white-hw.png" },
+        { name: "Black High Wire", img: "x68he-black-hw.png" }
     ],
     specs: [
       { key: "Polling Rate", val: "8000Hz" },
@@ -2217,6 +2217,32 @@ const products = [
     ]
   }
 ];
+
+// Function to handle variant image switching
+function updateVariantImage(variantName, productId) {
+    // 1. Defind the base path where your variant images are stored
+    const imagePath = '/images/keyboards/x68he/';
+    
+    // 2. Map the variant names to their specific image filenames
+    // IMPORTANT: Make sure these filenames match your actual images exactly!
+    const imageMap = {
+        'rose red': 'x68he-rose-red.jpg',
+        'white high wire': 'x68he-white-high-wire.jpg',
+        'black high wire': 'x68he-black-high-wire.jpg',
+        'black': 'x68he-black.jpg' // This is the one with the topographic pattern and text
+    };
+
+    // 3. Find the main image element and the variant select element
+    // We use a specific ID structure (e.g., 'mainImage_1') to support multiple products per page
+    const mainImage = document.getElementById(`mainImage_${productId}`);
+    const variantSelect = document.getElementById(`variantSelect_${productId}`);
+
+    // 4. Update the image source if a valid variant is selected
+    if (variantName && imageMap[variantName]) {
+        mainImage.src = imagePath + imageMap[variantName];
+        mainImage.alt = `X68HE ATTACK SHARK - ${variantName} Variant`; // Update alt text for accessibility
+    }
+}
 
 // =============================================
 // PAYPAL CONFIG
@@ -2454,38 +2480,45 @@ function filterProducts(cat) {
 }
 
 function showDetail(id) {
-  const p = products.find(x => x.id === id);
-  document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
-  document.getElementById('detail').style.display = 'block';
-  
-  document.getElementById('detail-content').innerHTML = `
-    <div class="detail-img"><img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='📦'"></div>
-    <div class="detail-meta">
-      <div class="detail-cat">◈ ${p.category.toUpperCase()}</div>
-      <div class="detail-name">${p.name}</div>
-      <div class="detail-price">${CURRENCY}${p.price}</div>
-      <div class="detail-shipping">🌍 Free Worldwide Shipping</div>
-      <div class="detail-desc">${p.desc}</div>
-      
-      ${p.variants && p.variants.length > 0 ? `
-        <div class="variant-section">
-          <div class="variant-label">Select Version</div>
-          <select class="variant-select" id="variantSelect">
-            ${p.variants.map((v, i) => `<option value="${v}">${v}</option>`).join('')}
-          </select>
+    const p = products.find(x => x.id === id);
+    document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
+    document.getElementById('detail').style.display = 'block';
+
+    document.getElementById('detail-content').innerHTML = `
+        <div class="detail-img">
+            <img id="mainProductImage" src="${p.image}" alt="${p.name}" onerror="this.outerHTML=''">
         </div>
-      ` : ''}
-      
-      <div class="specs-grid">
-        ${p.specs.map(s => `<div class="spec"><div class="spec-key">${s.key}</div><div class="spec-val">${s.val}</div></div>`).join('')}
-      </div>
-      
-      <button class="buy-btn" onclick="buyNow(${p.id})">◈ Buy Now — ${CURRENCY}${p.price}</button>
-      <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
-    </div>
-  `;
-  
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+        <div class="detail-meta">
+            <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
+            <div class="detail-name">${p.name}</div>
+            <div class="detail-price">${CURRENCY}${p.price}</div>
+            <div class="detail-shipping">🌍 Free Worldwide Shipping</div>
+            <div class="detail-desc">${p.desc}</div>
+        </div>
+
+        ${p.variants && p.variants.length > 0 ? `
+            <div class="variant-section">
+                <div class="variant-label">Select Version</div>
+                <select class="variant-select" id="variantSelect" onchange="changeVariant(this)">
+                    ${p.variants.map(v => `<option value="${v.img}">${v.name}</option>`).join('')}
+                </select>
+            </div>
+        ` : ''}
+
+        <div class="specs-grid">
+            ${p.specs.map(s => `
+                <div class="spec">
+                    <div class="spec-key">${s.key}</div>
+                    <div class="spec-val">${s.val}</div>
+                </div>
+            `).join('')}
+        </div>
+
+        <button class="buy-btn" onclick="buyNow(${p.id})">Buy Now — ${CURRENCY}${p.price}</button>
+        <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
+    `;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function addToCartFromDetail(id) {
@@ -2620,6 +2653,15 @@ for (let i = 0; i < 10; i++) {
   p.style.left = Math.random() * 100 + '%';
   p.style.top = Math.random() * 100 + '%';
   particlesContainer.appendChild(p);
+}
+
+// Put this at the very bottom of your script section
+function changeVariant(selectElement) {
+    const newImageFile = selectElement.value;
+    const mainImg = document.getElementById('mainProductImage');
+    if (mainImg) {
+        mainImg.src = "images/" + newImageFile;
+    }
 }
 
 // Initialize
