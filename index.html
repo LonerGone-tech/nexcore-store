@@ -6,6 +6,16 @@
 <title>NEXCORE — Pro Gear, Zero Compromise</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  .product-card.sold-out {
+  opacity: 0.6;
+  cursor: not-allowed;
+  filter: grayscale(0.8);
+}
+
+.product-card.sold-out:hover {
+  transform: none;
+  border-color: var(--border);
+}
   :root {
     --bg: #03060a;
     --bg2: #060c14;
@@ -2136,6 +2146,7 @@ const products = [
     category: "keyboard",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S8c0daf341216466f9c95160d2f8a25e60.jpg",
     price: 300,
+    inStock: true,
     badge: "hot",
     stars: "★★★★★",
     desc: "Dominate the competition with the X68HE Attack Shark Magnetic Gaming Keyboard. Featuring revolutionary 0.01mm rapid trigger technology and an insane 8000Hz polling rate, every keystroke is registered with surgical precision. The SOCD/Rs system and 0.125ms response time give you the competitive edge you need. Built for pro gamers who refuse to compromise.",
@@ -2160,6 +2171,7 @@ const products = [
     category: "mouse",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S536ca519a42e432c98bdc9bef852a4faQ.jpg",
     price: 160,
+    inStock: true,
     badge: "new",
     stars: "★★★★★",
     desc: "Experience wireless freedom with the Attack Shark X11 featuring the legendary PixArt PAW3311 sensor. Triple connectivity modes (Bluetooth, 2.4G Wireless, Wired) ensure you're always connected. The ergonomic design and premium charging dock make this the ultimate wireless gaming companion. Ultra-lightweight, ultra-responsive, ultra-precise.",
@@ -2184,6 +2196,7 @@ const products = [
     category: "keyboard",
     image: "https://ae-pic-a1.aliexpress-media.com/kf/S6f585d88897740349b9940b0e02d5e5aB.jpg",
     price: 170,
+    inStock: true,
     badge: "sale",
     stars: "★★★★★",
     desc: "The Ajazz AK820 Pro redefines what a gaming keyboard can be. Triple connectivity with Bluetooth 5.1, 2.4G wireless, and USB-C wired modes. The premium gasket mount construction delivers a satisfying typing experience, while hot-swappable switches let you customize your feel. The integrated knob adds intuitive volume and media control. Your setup deserves this upgrade.",
@@ -2406,26 +2419,31 @@ function renderGrid(list = products) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
   
-  grid.innerHTML = list.map(p => `
-    <div class="product-card" onclick="showDetail(${p.id})">
-      <div class="product-img-wrap">
-        <img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span class=\\'emoji-placeholder\\'>📦</span>'">
-        ${p.badge === 'new' ? '<span class="badge badge-new">◈ NEW</span>' : ''}
-        ${p.badge === 'sale' ? '<span class="badge badge-sale">◈ SALE</span>' : ''}
-        ${p.badge === 'hot' ? '<span class="badge badge-hot">🔥 HOT</span>' : ''}
-        <div class="card-arrow">↗</div>
-      </div>
-      <div class="product-info">
-        <div class="product-cat">◈ ${p.category.toUpperCase()}</div>
-        <div class="product-name">${p.shortName || p.name}</div>
-        <div class="product-footer">
-          <div><span class="price">${CURRENCY}${p.price}</span></div>
-          <div class="stars">${p.stars}</div>
+  grid.innerHTML = list.map(p => {
+    const isSoldOut = p.inStock === false;
+    
+    return `
+      <div class="product-card ${isSoldOut ? 'sold-out' : ''}" onclick="${isSoldOut ? '' : `showDetail(${p.id})`}">
+        <div class="product-img-wrap">
+          <img src="${p.image}" alt="${p.name}" onerror="this.outerHTML='<span class=\\'emoji-placeholder\\'>📦</span>'">
+          ${isSoldOut ? '<span class="badge badge-hot">SOLD OUT</span>' : ''}
+          ${!isSoldOut && p.badge === 'new' ? '<span class="badge badge-new">◈ NEW</span>' : ''}
+          ${!isSoldOut && p.badge === 'sale' ? '<span class="badge badge-sale">◈ SALE</span>' : ''}
+          ${!isSoldOut && p.badge === 'hot' ? '<span class="badge badge-hot">🔥 HOT</span>' : ''}
+          ${!isSoldOut ? '<div class="card-arrow">↗</div>' : ''}
         </div>
-        <div class="free-shipping">🌍 Free Worldwide Shipping</div>
+        <div class="product-info">
+          <div class="product-cat">◈ ${p.category.toUpperCase()}</div>
+          <div class="product-name">${p.shortName || p.name}</div>
+          <div class="product-footer">
+            <div><span class="price">${isSoldOut ? '---' : CURRENCY + p.price}</span></div>
+            <div class="stars">${p.stars}</div>
+          </div>
+          <div class="free-shipping">${isSoldOut ? 'Restocking soon' : '🌍 Free Worldwide Shipping'}</div>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
 function filterProducts(cat) {
