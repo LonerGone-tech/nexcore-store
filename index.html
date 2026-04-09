@@ -6,6 +6,54 @@
 <title>NEXCORE — Pro Gear, Zero Compromise</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+
+  .variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.variant-card {
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #1a1a1a;
+}
+
+.variant-card:hover {
+    border-color: #00ffcc; /* Neon cyan hover */
+}
+
+.variant-card.active {
+    border-color: #00ffcc;
+    background: #00ffcc22;
+}
+
+.variant-preview {
+    width: 100%;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 5px;
+    /* This makes small images look sharper */
+    image-rendering: -webkit-optimize-contrast;
+}
+
+.variant-card span {
+    font-size: 12px;
+    display: block;
+    color: #fff;
+}
+
+/* Fix for blurry main image */
+#mainProductImage {
+    width: 100%;
+    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+}
   .product-card.sold-out {
   opacity: 0.6;
   cursor: not-allowed;
@@ -2497,13 +2545,18 @@ function showDetail(id) {
         </div>
 
         ${p.variants && p.variants.length > 0 ? `
-            <div class="variant-section">
-                <div class="variant-label">Select Version</div>
-                <select class="variant-select" id="variantSelect" onchange="changeVariant(this)">
-                    ${p.variants.map(v => `<option value="${v.img}">${v.name}</option>`).join('')}
-                </select>
-            </div>
-        ` : ''}
+    <div class="variant-section">
+        <div class="variant-label">Select Version</div>
+        <div class="variant-grid">
+            ${p.variants.map(v => `
+                <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
+                    <img src="images/${v.img}" alt="${v.name}" class="variant-preview">
+                    <span>${v.name}</span>
+                </div>
+            `).join('')}
+        </div>
+    </div>
+` : ''}
 
         <div class="specs-grid">
             ${p.specs.map(s => `
@@ -2656,12 +2709,18 @@ for (let i = 0; i < 10; i++) {
 }
 
 // Put this at the very bottom of your script section
-function changeVariant(selectElement) {
-    const newImageFile = selectElement.value;
+function changeVariantBox(element, fileName) {
+    // 1. Swap the main image
     const mainImg = document.getElementById('mainProductImage');
     if (mainImg) {
-        mainImg.src = "images/" + newImageFile;
+        mainImg.src = "images/" + fileName;
     }
+
+    // 2. Remove 'active' class from all boxes and add to the clicked one
+    document.querySelectorAll('.variant-card').forEach(card => {
+        card.classList.remove('active');
+    });
+    element.classList.add('active');
 }
 
 // Initialize
