@@ -2584,34 +2584,35 @@ function showDetail(id) {
     document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
     document.getElementById('detail').style.display = 'block';
 
-document.getElementById('detail-content').innerHTML = `
-    <div class="detail-container">
-        <div class="detail-img-wrapper">
-            <img id="mainProductImage" src="${p.image || p.img}" alt="${p.name}" onerror="this.style.display='none'">
+    // Everything inside these backticks is the HTML for the page
+    document.getElementById('detail-content').innerHTML = `
+        <div class="detail-container">
+            <div class="detail-img">
+                <img id="mainProductImage" src="${p.image}" alt="${p.name}">
+            </div>
+            
+            <div class="detail-meta">
+                <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
+                <div class="detail-name">${p.name}</div>
+                <div class="detail-price">${CURRENCY}${p.price}</div>
+                <div class="detail-desc">${p.desc}</div>
+
+                ${p.variants && p.variants.length > 0 ? `
+                    <div class="variant-section">
+                        <div class="variant-label">Select Version</div>
+                        <div class="variant-grid">
+                            ${p.variants.map(v => `
+                                <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
+                                    <img src="${v.img}" alt="${v.name}" class="variant-preview">
+                                    <span>${v.name}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
         </div>
         
-        <div class="detail-meta">
-            <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
-            <div class="detail-name">${p.name}</div>
-            <div class="detail-price">${CURRENCY}${p.price}</div>
-            <div class="detail-desc">${p.desc}</div>
-            
-            ${p.variants && p.variants.length > 0 ? `
-                <div class="variant-section">
-                    <div class="variant-label">Select Version</div>
-                    <div class="variant-grid">
-                        ${p.variants.map(v => `
-                            <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
-                                <img src="${v.img}" alt="${v.name}" class="variant-preview">
-                                <span>${v.name}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            ` : ''}
-        </div>
-    </div>
-
         <div class="specs-grid">
             ${p.specs.map(s => `
                 <div class="spec">
@@ -2620,11 +2621,11 @@ document.getElementById('detail-content').innerHTML = `
                 </div>
             `).join('')}
         </div>
-
         <button class="buy-btn" onclick="buyNow(${p.id})">Buy Now — ${CURRENCY}${p.price}</button>
         <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
-    `;
+    `; // The backtick MUST end here, after the buttons!
 
+    // This moves the screen back to the top so the user sees the image
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
