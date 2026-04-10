@@ -2204,7 +2204,7 @@ const products = [
     name: "X68HE Attack Shark Magnetic Gaming Keyboard",
     shortName: "X68HE Attack Shark",
     category: "keyboard",
-    image: "images/x68he-main.png",
+    image: "Images/x68he-main.png",
     price: 300,
     inStock: true,
     badge: "hot",
@@ -2212,10 +2212,10 @@ const products = [
     desc: "Dominate the competition with the X68HE Attack Shark Magnetic Gaming Keyboard. Featuring revolutionary 0.01mm rapid trigger technology and an insane 8000Hz polling rate, every keystroke is registered with surgical precision. The SOCD/Rs system and 0.125ms response time give you the competitive edge you need. Built for pro gamers who refuse to compromise.",
     aliLink: "https://he.aliexpress.com/item/1005008813162763.html",
     variants: [
-        { name: "Black (Original)", img: "x68he-black.png" },
-        { name: "Rose Red", img: "x68he-rose-red.png" },
-        { name: "White High Wire", img: "x68he-white-hw.png" },
-        { name: "Black High Wire", img: "x68he-black-hw.png" }
+        { name: "Black (Original)", img: "Images/x68he-black.png" },
+        { name: "Rose Red", img: "Images/x68he-rose-red.png" },
+        { name: "White High Wire", img: "Images/x68he-white-hw.png" },
+        { name: "Black High Wire", img: "Images/x68he-black-hw.png" }
     ],
     specs: [
       { key: "Polling Rate", val: "8000Hz" },
@@ -2281,7 +2281,7 @@ const products = [
 // Function to handle variant image switching
 function updateVariantImage(variantName, productId) {
     // 1. Defind the base path where your variant images are stored
-    const imagePath = '/images/keyboards/x68he/';
+    const imagePath = '/Images/keyboards/x68he/';
     
     // 2. Map the variant names to their specific image filenames
     // IMPORTANT: Make sure these filenames match your actual images exactly!
@@ -2562,7 +2562,7 @@ function showDetail(id) {
                     <div class="variant-grid">
                         ${p.variants.map(v => `
                             <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
-                                <img src="images/${v.img}" alt="${v.name}" class="variant-preview">
+                                <img src="Images/${v.img}" alt="${v.name}" class="variant-preview">
                                 <span>${v.name}</span>
                             </div>
                         `).join('')}
@@ -2726,7 +2726,7 @@ function changeVariantBox(element, fileName) {
     // 1. Swap the main image
     const mainImg = document.getElementById('mainProductImage');
     if (mainImg) {
-        mainImg.src = "images/" + fileName;
+        mainImg.src = "Images/" + fileName;
     }
 
     // 2. Remove 'active' class from all boxes and add to the clicked one
