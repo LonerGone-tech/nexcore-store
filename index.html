@@ -2281,15 +2281,15 @@ const products = [
 // Function to handle variant image switching
 function updateVariantImage(variantName, productId) {
     // 1. Defind the base path where your variant images are stored
-    const imagePath = '/Images/keyboards/x68he/';
+    const imagePath = 'Images/';
     
     // 2. Map the variant names to their specific image filenames
     // IMPORTANT: Make sure these filenames match your actual images exactly!
     const imageMap = {
-        'rose red': 'x68he-rose-red.jpg',
-        'white high wire': 'x68he-white-high-wire.jpg',
-        'black high wire': 'x68he-black-high-wire.jpg',
-        'black': 'x68he-black.jpg' // This is the one with the topographic pattern and text
+        'rose red': 'x68he-rose-red.png',
+        'white high wire': 'x68he-white-hw.png',
+        'black high wire': 'x68he-black-hw.png',
+        'black': 'x68he-black.png' // This is the one with the topographic pattern and text
     };
 
     // 3. Find the main image element and the variant select element
