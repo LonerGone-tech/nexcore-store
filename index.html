@@ -2287,9 +2287,10 @@ function updateVariantImage(variantName, productId) {
     // IMPORTANT: Make sure these filenames match your actual images exactly!
     const imageMap = {
         'rose red': 'x68he-rose-red.png',
-        'white high wire': 'x68he-white-hw.png',
-        'black high wire': 'x68he-black-hw.png',
-        'black': 'x68he-black.png' // This is the one with the topographic pattern and text
+        'White High Wire': 'x68he-white-hw.png',
+        'Black High Wire': 'x68he-black-hw.png',
+        'Black (Original)': 'x68he-black.png' // Matches your product array!
+        
     };
 
     // 3. Find the main image element and the variant select element
@@ -2562,7 +2563,7 @@ function showDetail(id) {
                     <div class="variant-grid">
                         ${p.variants.map(v => `
                             <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
-                                <img src="Images/${v.img}" alt="${v.name}" class="variant-preview">
+                                <img src="${v.img}" alt="${v.name}" class="variant-preview">
                                 <span>${v.name}</span>
                             </div>
                         `).join('')}
@@ -2726,7 +2727,8 @@ function changeVariantBox(element, fileName) {
     // 1. Swap the main image
     const mainImg = document.getElementById('mainProductImage');
     if (mainImg) {
-        mainImg.src = "Images/" + fileName;
+        // Just use fileName because it already has 'Images/' in it!
+        mainImg.src = fileName; 
     }
 
     // 2. Remove 'active' class from all boxes and add to the clicked one
