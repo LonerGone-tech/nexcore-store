@@ -10,30 +10,47 @@
 
 /* Updated Container - Use this one */
 /* Use this to create the 2-column split */
+/* The Main Wrapper for the 2-column split */
 .product-page-wrapper {
     display: flex;
-    gap: 40px;
+    flex-direction: row; /* Side-by-side */
+    gap: 50px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
+/* Left Column: Image */
 .product-image-section {
-    flex: 1; /* Left column */
-}
-
-.product-info-section {
-    flex: 1; /* Right column */
-    display: flex;
-    flex-direction: column;
-    text-align: left; /* Aligns text like the reference photo */
+    flex: 1.2; /* Makes the image side slightly wider */
+    position: sticky;
+    top: 20px;
 }
 
 #mainProductImage {
     width: 100%;
     max-height: 550px;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 12px;
+    background: #0f111a;
+}
+
+/* Right Column: Info */
+.product-info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Aligns text to the left like your reference image */
+}
+
+/* Mobile Fix: Stacks them back on top of each other for your phone */
+@media (max-width: 900px) {
+    .product-page-wrapper {
+        flex-direction: column;
+    }
+    .product-image-section {
+        position: static;
+    }
 }
 
 /* Make it look good on your iPhone */
