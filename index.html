@@ -2576,19 +2576,18 @@ function showDetail(id) {
     document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
     document.getElementById('detail').style.display = 'block';
 
-    document.getElementById('detail-content').innerHTML = `
+document.getElementById('detail-content').innerHTML = `
     <div class="detail-container">
         <div class="detail-img-wrapper">
-            <img id="mainProductImage" src="${p.image}" alt="${p.name}" onerror="this.outerHTML=''">
+            <img id="mainProductImage" src="${p.image || p.img}" alt="${p.name}" onerror="this.src='Images/placeholder.png'">
         </div>
         
         <div class="detail-meta">
             <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
             <div class="detail-name">${p.name}</div>
             <div class="detail-price">${CURRENCY}${p.price}</div>
-            <div class="detail-shipping">🌍 Free Worldwide Shipping</div>
             <div class="detail-desc">${p.desc}</div>
-
+            
             ${p.variants && p.variants.length > 0 ? `
                 <div class="variant-section">
                     <div class="variant-label">Select Version</div>
@@ -2603,6 +2602,7 @@ function showDetail(id) {
                 </div>
             ` : ''}
         </div>
+    </div>
 
         <div class="specs-grid">
             ${p.specs.map(s => `
