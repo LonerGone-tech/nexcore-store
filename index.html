@@ -9,25 +9,38 @@
 
 
 /* Updated Container - Use this one */
-.detail-container {
+/* Use this to create the 2-column split */
+.product-page-wrapper {
     display: flex;
-    flex-direction: row; /* Forces side-by-side */
     gap: 40px;
-    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.detail-img {
-    flex: 1; /* Gives the image 50% of the width */
+.product-image-section {
+    flex: 1; /* Left column */
 }
 
-.detail-meta {
-    flex: 1; /* Gives the text 50% of the width */
+.product-info-section {
+    flex: 1; /* Right column */
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Aligns text like the reference photo */
 }
 
 #mainProductImage {
     width: 100%;
-    max-height: 500px;
+    max-height: 550px;
     object-fit: contain;
+    border-radius: 10px;
+}
+
+/* Make it look good on your iPhone */
+@media (max-width: 800px) {
+    .product-page-wrapper {
+        flex-direction: column;
+    }
 }
 
 /* Mobile Fix: Stack them so it looks good on your phone */
@@ -2574,49 +2587,49 @@ function showDetail(id) {
     document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
     document.getElementById('detail').style.display = 'block';
 
-    // Everything inside these backticks is the HTML for the page
     document.getElementById('detail-content').innerHTML = `
-        <div class="detail-container">
-            <div class="detail-img">
-                <img id="mainProductImage" src="${p.image}" alt="${p.name}">
+        <div class="product-page-wrapper">
+            <div class="product-image-section">
+                <img id="mainProductImage" src="${p.image || p.img}" alt="${p.name}">
             </div>
             
-            <div class="detail-meta">
+            <div class="product-info-section">
                 <div class="detail-cat">◆ ${p.category.toUpperCase()}</div>
-                <div class="detail-name">${p.name}</div>
+                <h1 class="detail-name">${p.name}</h1>
                 <div class="detail-price">${CURRENCY}${p.price}</div>
-                <div class="detail-desc">${p.desc}</div>
+                <p class="detail-desc">${p.desc}</p>
 
                 ${p.variants && p.variants.length > 0 ? `
                     <div class="variant-section">
-                        <div class="variant-label">Select Version</div>
+                        <span class="section-label">Select Version</span>
                         <div class="variant-grid">
                             ${p.variants.map(v => `
                                 <div class="variant-card" onclick="changeVariantBox(this, '${v.img}')">
-                                    <img src="${v.img}" alt="${v.name}" class="variant-preview">
-                                    <span>${v.name}</span>
+                                    <img src="${v.img}" alt="${v.name}">
                                 </div>
                             `).join('')}
                         </div>
                     </div>
                 ` : ''}
+
+                <div class="purchase-actions">
+                    <button class="buy-btn" onclick="buyNow(${p.id})">Buy Now</button>
+                    <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
+                </div>
+
+                <div class="specs-grid">
+                    ${p.specs.map(s => `
+                        <div class="spec">
+                            <div class="spec-key">${s.key}</div>
+                            <div class="spec-val">${s.val}</div>
+                        </div>
+                    `).join('')}
+                </div>
             </div>
         </div>
-        
-        <div class="specs-grid">
-            ${p.specs.map(s => `
-                <div class="spec">
-                    <div class="spec-key">${s.key}</div>
-                    <div class="spec-val">${s.val}</div>
-                </div>
-            `).join('')}
-        </div>
-        <button class="buy-btn" onclick="buyNow(${p.id})">Buy Now — ${CURRENCY}${p.price}</button>
-        <button class="add-cart-btn" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
-    `; // The backtick MUST end here, after the buttons!
+    `;
 
-    // This moves the screen back to the top so the user sees the image
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Keeps the smooth scroll fix
 }
 
 function addToCartFromDetail(id) {
