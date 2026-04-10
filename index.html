@@ -2229,7 +2229,7 @@ const products = [
     name: "Attack Shark X11 Wireless Gaming Mouse",
     shortName: "Attack Shark X11",
     category: "mouse",
-    image: "https://ae-pic-a1.aliexpress-media.com/kf/S536ca519a42e432c98bdc9bef852a4faQ.jpg",
+    image: "Images/AttackSharkX11.png",
     price: 160,
     inStock: true,
     badge: "new",
@@ -2237,10 +2237,9 @@ const products = [
     desc: "Experience wireless freedom with the Attack Shark X11 featuring the legendary PixArt PAW3311 sensor. Triple connectivity modes (Bluetooth, 2.4G Wireless, Wired) ensure you're always connected. The ergonomic design and premium charging dock make this the ultimate wireless gaming companion. Ultra-lightweight, ultra-responsive, ultra-precise.",
     aliLink: "https://he.aliexpress.com/item/1005008684858657.html",
     variants: [
-      "Black",
-      "White",
-      "Pink",
-      "Blue"
+        { name: "Phantom Black", img: "Images/mouse-black.png" },
+        { name: "Ghost White", img: "Images/mouse-white.png" },
+        { name: "Blood Red", img: "Images/mouse-red.png" }
     ],
     specs: [
       { key: "Sensor", val: "PAW3311" },
@@ -2290,6 +2289,11 @@ function updateVariantImage(variantName, productId) {
         'White High Wire': 'x68he-white-hw.png',
         'Black High Wire': 'x68he-black-hw.png',
         'Black (Original)': 'x68he-black.png' // Matches your product array!
+
+        // Mouse Variants (Add these!)
+        'Phantom Black': 'Images/mouse-black.png',
+        'Ghost White': 'Images/mouse-white.png',
+        'Blood Red': 'Images/mouse-red.png'
         
     };
 
