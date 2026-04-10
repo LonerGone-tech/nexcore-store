@@ -11,35 +11,25 @@
 /* Updated Container - Use this one */
 .detail-container {
     display: flex;
-    flex-wrap: wrap; 
-    gap: 30px;
-    padding: 20px;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    min-height: 400px; 
+    flex-direction: row; /* Forces side-by-side */
+    gap: 40px;
     align-items: flex-start;
 }
 
-/* Updated Wrapper */
-.detail-img-wrapper {
-    flex: 1;
-    min-width: 300px; 
-    display: flex;
-    justify-content: center;
+.detail-img {
+    flex: 1; /* Gives the image 50% of the width */
 }
 
-/* Final Main Image Fix */
-#mainProductImage {
-    max-width: 100%;
-    max-height: 500px; 
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    border-radius: 12px;
-    background: #0f111a;
+.detail-meta {
+    flex: 1; /* Gives the text 50% of the width */
 }
+
+#mainProductImage {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+}
+
 /* Mobile Fix: Stack them so it looks good on your phone */
 @media (max-width: 768px) {
     .detail-container {
